@@ -8,13 +8,15 @@ var config = {
       static_path =  base + 'public/site/';
       routes = {
         base: '',
+        //templates: base + 'module/User/view/site/',
         templates: base + 'module/',
         static: static_path,
         styles: static_path + 'styles/',
         images: static_path + 'images/',
         fonts: static_path + 'fonts/',
         scripts: static_path + 'scripts/',
-        sprites: static_path + 'sprites/'
+        sprites: static_path + 'sprites/',
+         svg: static_path + 'svg/',
       }
     } else {
       base = 'build';
@@ -27,7 +29,8 @@ var config = {
         images: static_path + '/images',
         fonts: static_path + '/fonts',
         scripts: static_path + '/scripts',
-        sprites: static_path + '/sprites'
+        sprites: static_path + '/sprites',
+         svg: static_path + 'svg/',
       }
     }
     return routes;
@@ -43,7 +46,21 @@ var config = {
   },
   getEnv: function () {
     return this.env;
-  }
+  },
+  notifyConfig : function (options) {
+    var _config = {}
+
+    if (typeof options == "object") {
+      return options
+    }
+
+    _config = {
+      message : options,
+      onLast  : true
+    }
+
+    return _config;
+  },
 };
 
 module.exports = config;
