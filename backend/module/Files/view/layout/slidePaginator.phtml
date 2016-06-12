@@ -1,0 +1,57 @@
+<?php
+$url = $this->url($this->route);
+if(isset($this->url_params)){
+    if(is_array($this->url_params)){
+        $url = $this->url($this->route,$this->url_params);
+    }
+}
+
+if ($this->pageCount): ?>
+    <div class="pagination pagination-centered">
+        <!-- Previous page link -->
+        <?php if (isset($this->previous)): ?>
+            <li>
+                <a href="<?php echo $url ; ?>?page=<?php echo $this->previous; ?>">
+                    << Página anterior
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="disabled">
+                <a href="#">
+                    <<
+                </a>
+            </li>
+        <?php endif; ?>
+
+        <!-- Numbered page links -->
+        <?php foreach ($this->pagesInRange as $page): ?>
+            <?php if ($page != $this->current): ?>
+                <li>
+                    <a href="<?php echo $url;?>?page=<?php echo $page; ?>">
+                        <?php echo $page; ?>
+                    </a>
+                </li>
+            <?php else: ?>
+                <li class="active">
+                    <a href="#"><?php echo $page; ?></a>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <!-- Next page link -->
+        <?php if (isset($this->next)): ?>
+            <li>
+                <a href="<?php echo $url; ?>?page=<?php echo $this->next; ?>">
+                    >>
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="disabled">
+                <a href="#">
+                    Siguiente página >>
+                </a>
+            </li>
+        <?php endif; ?>
+
+    </div>
+<?php endif; ?>

@@ -1,0 +1,13 @@
+<?php if(in_array('seo-view', $perms)) { ?>
+<li>
+    <a class="list-group-item" data-toggle="collapse" href="#nav-seo">SEO
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse" id="nav-seo">
+        <li>
+            <a class="list-group-item" href="
+                <?php echo $this->url('admin/seo') ?>">Pages</a>
+        </li>
+    </ul>
+</li>
+<?php } ?>

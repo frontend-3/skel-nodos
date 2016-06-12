@@ -1,0 +1,14 @@
+<?php if(in_array(sprintf("%s-edit", $perm), $perms)) { ?>
+<a class="btn btn-xs btn-warning" href="
+    <?php echo $this->url($route, array('id' => $page->id));?>">
+    <i class="glyphicon glyphicon-pencil"></i> Edit
+</a>
+<?php } ?>
+<?php if(in_array(sprintf("%s-delete", $perm), $perms)) { ?>
+<a class="btn btn-xs btn-danger" data-modal="#modal-confirm" data-target="
+    
+    <?php echo $this->url($delete_url, array('action' => 'delete','id' => $page->id));?>">
+    <i class="glyphicon glyphicon-remove"></i> Delete
+</a>
+<?php } ?>
+

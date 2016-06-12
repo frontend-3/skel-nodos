@@ -1,0 +1,8 @@
+vendor/
+composer.phar
+composer.lock
+config/autoload/local.php
+log.txt
+public/captcha/
+public/media/
+phinx.yml

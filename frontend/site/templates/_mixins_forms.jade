@@ -1,0 +1,266 @@
+mixin csrf_token(name)
+  <?php $e=$form->get('#{name}'); ?>
+  <?php echo $this->formInput($e); ?>
+
+mixin input_text(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100  
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'text','class'=>'#{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}'));?>
+      <?php echo $this->formInput($e);?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin input_number(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','class'=>'number #{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}'));?>
+      <?php $e->setAttribute('data-maxlength','#{maxlength}'); ?>
+      <?php echo $this->formInput($e);?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin input_date(config)  
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+  - minDate = config.minDate || '01/01/1920'
+  - maxDate = config.maxDate || false
+
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'text','class'=>'date #{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}', 'data-rule-mindate' => '#{minDate}', 'data-rule-maxdate' => '#{maxDate}' ));?>
+      <?php echo $this->formInput($e);?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin input_email(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+  - equalTo = config.equalTo || ''
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'email','class'=>'#{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}', 'data-reference-confirm' => '#{equalTo}' ));?>
+      <?php echo $this->formInput($e);?>
+    .ElementForm-errorContent(class='ElementForm-label--error' + camelCase(name.replace('_' , '-')))
+      <?php echo $this->showError($e); ?>
+
+
+mixin input_password(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+  - equalTo = config.equalTo || ''
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'password','class'=>'#{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}', 'data-reference-confirm' => '#{equalTo}' ));?>
+      <?php echo $this->FormPassword($e);?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin checkbox(config)
+  - name = config.name || ''
+  - id = config.id || name
+  - tabindex = config.tabindex || ''
+  - label = config.label || ''
+  - link_text = config.link_text || ''
+  - link_href = config.link_href || ''
+  - required = config.required || false
+  - has_link = config.has_link || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      .ElementForm-contentCheckBox
+        <?php $e=$form->get('#{name}'); ?>        
+        <?php $e->setAttributes(array('tabIndex'=>'#{tabindex}', 'required' => '#{required}', 'id' => '#{id}' ));?>
+        <?php echo $this->formElement($e); ?>
+      label(for="#{id}").ElementForm-label.ElementForm-label--checkbox  #{label}
+      if has_link
+        a(href!="#{link_href}") #{link_text}
+
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin radiobox(config)
+  - name = config.name || ''
+  - id = config.id || name
+  - tabindex = config.tabindex || ''
+  - label = config.label || ''
+  - link_text = config.link_text || ''
+  - link_href = config.link_href || ''
+  - required = config.required || false
+  - has_link = config.has_link || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      .ElementForm-contentRadioBox
+        <?php $e=$form->get('#{name}'); ?>        
+        <?php $e->setAttributes(array('tabIndex'=>'#{tabindex}', 'required' => '#{required}' ));?>
+        <?php echo $this->formElement($e); ?>
+      label(for="#{id}").ElementForm-label.ElementForm-label--radiobox  #{label}
+      if has_link
+        a(href!="#{link_href}") #{link_text}
+
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin button(config)
+  .ElementForm-statement(class=config.wrapperClss ? config.wrapperClss : '')
+    <?php echo $this->formRow($form->get('#{config.name}')); ?>
+
+mixin select(config)
+  - name = config.name || ''
+  - id = config.id || name
+  - var_name = config.var_name || name
+  - required = config.required || ''
+  - tabindex = config.tabindex || ''
+  - valueSelected = config.valueSelected || ''
+  - isDisabled = config.isDisabled || false
+  - hasNoLabel = config.hasLabel || false
+  - label = config.label || ''
+  - defaultText = config.defaultText || ''
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label.ElementForm-label--select #{label}
+      
+      .ElementForm-select
+        .ElementForm-selectText=defaultText
+        .ElementForm-selectIcon
+        <?php $e=$form->get('#{name}'); ?>
+        <?php $e->setAttributes(array('id' => '#{id}','tabIndex'=>'#{tabindex}','class'=>'#{attrClass}'));?>
+        <?php echo $this->formSelect($e); ?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin captcha(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+  - equalTo = config.equalTo || ''
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'text','class'=>'#{attrClass}', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}', 'data-reference-confirm' => '#{equalTo}' ));?>
+      <?php echo $this->formCaptcha($e);?>
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+mixin textarea(config)
+  - name = config.name || ''
+  - var_name = config.var_name || name
+  - id = config.id || name
+  - placeholder = config.placeholder || ''
+  - tabindex = config.tabindex || ''
+  - defaultValue = config.defaultValue || ''
+  - isDisabled = config.isDisabled || false
+  - label = config.label || ''
+  - required = config.required || false
+  - attrClass = config.attrClass || ''
+  - attrClass = 'ElementForm-input' + attrClass || 'ElementForm-input'
+  - minlength = config.minlength || 0
+  - maxlength = config.maxlength || 100
+  - equalTo = config.equalTo || ''
+  .ElementForm(class='ElementForm--' + camelCase(name.replace('_' , '-')))
+    .ElementForm-statement
+      if (label)
+        label(for="#{id}").ElementForm-label !{label}
+      <?php $e=$form->get('#{name}'); ?>
+      <?php $e->setAttributes(array('id' => '#{id}','placeholder'=>'#{placeholder}','tabIndex'=>'#{tabindex}','type'=>'text','class'=>'#{attrClass} ElementForm-input--textarea', 'required' => '#{required}', 'minlength' => '#{minlength}', 'maxlength' => '#{maxlength}', 'data-reference-confirm' => '#{equalTo}' ));?>
+      <?php echo $this->formTextarea($e);?>
+    .ElementForm-errorContent
+      <?php echo $this->showError($e); ?>
+
+- function camelCase(input) { 
+    - return input.toLowerCase().replace(/_(.)/g, function(match, group1) {
+      - return group1.toUpperCase();
+    - });
+- }

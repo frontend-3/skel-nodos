@@ -1,0 +1,100 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <?php echo $this->headTitle('ZF2 ' . $this->translate('Admin Login'))->setSeparator(' - ')->setAutoEscape(false) ?>
+            <?php echo $this->headMeta() ->appendName('viewport', 'width=device-width, initial-scale=1.0') ->appendHttpEquiv('X-UA-Compatible', 'IE=edge') ?>
+            <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon','href' => $this->basePath() . '/cms/img/favicon.ico'))
+
+                ->prependStylesheet($this->basePath() . '/pages/css/pages.css')
+                ->prependStylesheet($this->basePath() . '/pages/css/pages-icons.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/switchery/css/switchery.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/bootstrap-select2/select2.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/jquery-scrollbar/jquery.scrollbar.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/font-awesome/css/font-awesome.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/boostrapv3/css/bootstrap.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/plugins/pace/pace-theme-flash.css')
+
+            ?>
+
+
+
+            <?php echo $this->headScript() ->prependFile($this->basePath() . '/cms/js/bootstrap.min.js') ->prependFile($this->basePath() . '/cms/js/jquery.min.js') ->prependFile($this->basePath() . '/cms/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',)) ->prependFile($this->basePath() . '/cms/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9',)) ; ?>
+        </head>
+        <body>
+            <!-- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"></nav> -->
+
+            <div class="login-wrapper ">
+              <!-- START Login Background Pic Wrapper-->
+              <div class="bg-pic">
+                <!-- START Background Pic-->
+                <div style="background-image:url(/assets/img/login-hero.jpg)" data-src="/assets/img/login-hero.jpg" data-src-retina="/assets/img/login-hero.jpg" alt="" class="bg-pic-src lazy"></div>
+                <!-- END Background Pic-->
+                <!-- START Background Caption-->
+                <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
+                  <h2 class="semi-bold text-white">Nodos Digital</h2>
+                  <p class="small">
+                    Construimos vínculos entre las marcas y sus consumidores.
+                  </p>
+                </div>
+                <!-- END Background Caption-->
+              </div>
+              <!-- END Login Background Pic Wrapper-->
+              <!-- START Login Right Container-->
+              <div class="login-container bg-white">
+                <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+
+                  <h1>Nodos Digital</h1>
+                  <p class="p-t-35">Identifícate para acceder a tu cuenta</p>
+                  <!-- START Login Form -->
+                  <?php $this->headTitle('x'); $form = $this->form; $form->prepare(); $form->setAttribute('action', $this->url('admin')); ?>
+                  <?php echo $this->form()->openTag($form); ?>
+                    <!-- START Form Control-->
+                    <div class="form-group form-group-default">
+                      <label>Usuario</label>
+                      <div class="controls">
+                        <?php $e = $form->get('csrf_token');
+                            echo $this->formHidden($e);
+                            echo $this->formText($form->get('username'));
+                            echo $this->formElementErrors()->render($this->form->get('username'));
+                        ?>
+                      </div>
+                    </div>
+                    <!-- END Form Control-->
+                    <!-- START Form Control-->
+                    <div class="form-group form-group-default">
+                      <label>Password</label>
+                      <div class="controls">
+                        <?php echo $this->formPassword($form->get('password'));
+                            echo $this->formElementErrors()->render($this->form->get('password'));
+                        ?>
+                      </div>
+                    </div>
+                        <?php echo $this->formElement($form->get('csrf')) ?>
+                        <?php echo $this->formSubmit($form->get('submit')); ?>
+                  <?php echo $this->form()->closeTag(); ?>
+                  <!--END Login Form-->
+                  <br>
+                            <?php if ($loginMsg!=""): ?>
+                            <div class="alert alert-danger">
+                                <?php echo $loginMsg; ?>
+                            </div>
+                            <br>
+                                <?php endif ?>
+                  <div class="pull-bottom sm-pull-bottom">
+                    <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
+
+                      <div class="col-sm-12 no-padding m-t-10">
+                        <p>
+                          <small>Desarrollado por <img alt="" class="m-t-5" data-src="/assets/img/logo_nodos.png" data-src-retina="/assets/img/logo_nodos.png" width="16" src="/assets/img/logo_nodos.png" style="margin-top:-9px;" /> odos Digital SAC <br/>©2010-2016 <a href="http://www.nodosdigital.pe" class="text-info" target="_blank">Skelsus CMS</a> - Todos los derechos son reservados</small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END Login Right Container-->
+            </div>
+
+                </body>
+            </html>

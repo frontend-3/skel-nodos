@@ -1,0 +1,18 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'PreHome'
+  - custom.body_cls = 'body--prehome'
+
+block main
+  section
+    h2 Prehome
+
+    .ButtonFacebook
+      a(href!=config.reverse_url('connect_facebook')) Conectar facebook
+    .ButtonTwitter
+      a(href!=config.reverse_url('connect_twitter')) Conectar Twitter
+
+
+block scripts
+  +requireTag('site.prehome')

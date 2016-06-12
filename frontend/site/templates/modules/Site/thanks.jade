@@ -1,0 +1,12 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'Gracias'
+  - custom.body_cls = 'thanks-body'
+
+block content
+  .thanks-wrapper
+    | Gracias!
+
+block scripts
+  +requireTag('site.thanks')

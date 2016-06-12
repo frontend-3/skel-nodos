@@ -1,0 +1,59 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'Contact'
+  - custom.body_cls = 'body--contact'
+
+block content
+  .Contact
+    <?php $form = $this->form; ?>
+    <?php $form->setAttribute('class', 'ContactForm'); ?>
+    <?php $form->setAttribute('action', $this->serverUrl(true)); ?>
+    <?php $form->prepare(); ?>
+    <?php echo $this->form()->openTag($form); ?>
+    +csrf_token('csrf_token')
+
+    - config_full_name = {}
+    - config_full_name.name = 'full_name'
+    - config_full_name.label = 'Nombres'
+    - config_full_name.required = true
+    - config_full_name.maxlength = 40
+    +input_text(config_full_name)
+
+    - config_email = {}
+    - config_email.name = 'email'
+    - config_email.label = 'E-Mail'
+    - config_email.required = true
+    - config_email.maxlength = 40
+    +input_email(config_email)
+
+    - config_cod_dpto = {}
+    - config_cod_dpto.name = 'category_id'
+    - config_cod_dpto.label = 'Categoria'
+    - config_cod_dpto.required = true
+    - config_cod_dpto.defaultText = 'CATEGORÍA'
+    +select(config_cod_dpto)
+
+    - config_comment = {}
+    - config_comment.name = 'comment'
+    - config_comment.label = 'Comentario'
+    - config_comment.required = true
+    - config_comment.maxlength = 40
+    +textarea(config_comment)
+    
+    - config_captcha = {}
+    - config_captcha.name = 'captcha'
+    - config_captcha.label = 'Código Captcha'
+    - config_captcha.required = true
+    +captcha(config_captcha)
+
+    input(type="submit")
+
+    <?php echo $this->form()->closeTag(); ?>
+
+
+
+
+    
+block scripts
+  +requireTag('site.register')

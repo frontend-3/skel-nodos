@@ -1,0 +1,12 @@
+extend ../../../_layout
+
+prepend html
+  - custom.title = 'Registro'
+  - custom.body_cls = 'body--thanks'
+
+block content
+  section
+    h2 Gracias!
+    
+block scripts
+  //-+requireTag('site.thanks')

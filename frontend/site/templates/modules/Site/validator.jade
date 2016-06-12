@@ -1,0 +1,12 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'Validación'
+  - custom.body_cls = 'body--validator'
+
+block main
+  section   
+    h2 Validator
+
+block scripts
+  +requireTag('site.validator')

@@ -1,0 +1,16 @@
+title:
+    label: Title
+    type: Text
+
+content:
+    label: Content
+    type: Textarea
+    cols: 10
+    rows: 80
+    class: description
+    id: description
+    filters:
+
+csrf:
+    type: Csrf
+

@@ -1,0 +1,51 @@
+route:
+    label: Route
+    type: Text
+    maxlength: 100
+    size: 30
+
+title:
+    label: Page Title
+    type: Text
+    maxlength: 45
+    size: 30
+
+seo_title:
+    label: SEO Title
+    type: Text
+    maxlength: 70
+    class: counter
+
+seo_noindex:
+    label: SEO Index
+    type: Select
+    valueOptions:
+        0: Active
+        1: Inactive
+
+seo_description:
+    label: SEO Description
+    type: Textarea
+    class: counter
+    rows: 10
+    cols: 80
+    maxlength: 160
+
+seo_keywords:
+    label: SEO Keywords
+    type: Textarea
+    rows: 10
+    cols: 80
+
+seo_image:
+    label: SEO Image
+    type: File
+    required: false
+    admin:
+        view: admin/seo/seo_image
+        view_as: image
+        path: /media/images/
+
+csrf:
+    type: Csrf
+

@@ -1,0 +1,143 @@
+extend ../../../_layout
+
+prepend html
+  - custom.title = 'Registro'
+  - custom.body_cls = 'body--register'
+
+block content
+  .Register
+    <?php $form = $this->form; ?>
+    <?php $form->setAttribute('id', 'form-register'); ?>
+    <?php $form->setAttribute('class', 'Register-form'); ?>
+    <?php $form->setAttribute('action', $this->serverUrl(true)); ?>
+    <?php $form->setAttribute('data-source-provinces', $this->url('provinces')); ?>
+    <?php $form->setAttribute('data-source-districts', $this->url('districts')); ?>
+    <?php $form->prepare(); ?>
+    <?php echo $this->form()->openTag($form); ?>
+    +csrf_token('csrf_token')
+
+    - config_first_name = {}
+    - config_first_name.name = 'first_name'
+    - config_first_name.label = 'Nombres'
+    - config_first_name.required = true
+    - config_first_name.maxlength = 40
+    +input_text(config_first_name)
+
+    - config_last_name = {}
+    - config_last_name.name = 'last_name'
+    - config_last_name.label = 'Apellidos'
+    - config_last_name.required = true
+    - config_last_name.maxlength = 40
+    +input_text(config_last_name)
+
+    - config_birthday = {}
+    - config_birthday.name = 'birthday'
+    - config_birthday.label = 'Nacimiento'
+    - config_birthday.required = true
+    - config_birthday.minDate = '01/01/1920'
+    - config_birthday.maxDate = '01/01/2016'
+    - config_birthday.maxlength = 11
+    +input_date(config_birthday)
+
+    - config_email = {}
+    - config_email.name = 'email'
+    - config_email.label = 'E-Mail'
+    - config_email.required = true
+    - config_email.maxlength = 40
+    +input_email(config_email)
+
+    - config_document_number = {}
+    - config_document_number.name = 'document_number'
+    - config_document_number.label = 'DNI'
+    - config_document_number.required = true
+    - config_document_number.maxlength = 8
+    - config_document_number.minlength = 8
+    +input_number(config_document_number)
+
+    - config_address = {}
+    - config_address.name = 'address'
+    - config_address.label = 'Dirección'
+    - config_address.required = true
+    - config_address.maxlength = 40
+    +input_text(config_address)
+
+    - config_cod_dpto = {}
+    - config_cod_dpto.name = 'cod_dpto'
+    - config_cod_dpto.label = 'Departamento'
+    - config_cod_dpto.required = true
+    - config_cod_dpto.defaultText = 'Departamento'
+    //-+select(config_cod_dpto)
+
+    - config_cod_prov = {}
+    - config_cod_prov.name = 'cod_prov'
+    - config_cod_prov.label = 'Provincia'
+    - config_cod_prov.required = true
+    - config_cod_prov.defaultText = 'Provincia'
+    //-+select(config_cod_prov)
+
+    - config_cod_dist = {}
+    - config_cod_dist.name = 'cod_dist'
+    - config_cod_dist.label = 'Distrito'
+    - config_cod_dist.required = true
+    - config_cod_dist.defaultText = 'Distrito'
+    //-+select(config_cod_dist)
+
+    - config_telephone = {}
+    - config_telephone.name = 'telephone'
+    - config_telephone.label = 'Teléfono'
+    - config_telephone.required = true
+    - config_telephone.maxlength = 9
+    - config_telephone.minlength = 7
+    +input_number(config_telephone)
+
+    - config_mobile_phone = {}
+    - config_mobile_phone.name = 'mobile_phone'
+    - config_mobile_phone.label = 'Celular'
+    - config_mobile_phone.required = true
+    - config_mobile_phone.maxlength = 9
+    - config_mobile_phone.minlength = 9
+    +input_number(config_mobile_phone)
+
+    - config_password = {}
+    - config_password.name = 'password'
+    - config_password.label = 'Contraseña'
+    - config_password.required = true
+    - config_password.minlength = 20
+    - config_password.maxlength = 40
+    +input_password(config_password)
+
+    - config_confirm_password = {}
+    - config_confirm_password.name = 'confirm_password'
+    - config_confirm_password.label = 'Confirmar Contraseña'
+    - config_confirm_password.required = true
+    - config_confirm_password.minlength = 20
+    - config_confirm_password.maxlength = 40
+    - config_confirm_password.equalTo = '#password'
+    +input_password(config_confirm_password)
+
+    - config_tyc = {}
+    - config_tyc.name = 'tyc'
+    - config_tyc.id = 'tyc'
+    - config_tyc.required = true
+    - config_tyc.label = 'Acepto'
+    - config_tyc.has_link = true
+    - config_tyc.link_text = 'términos y condiciones'
+    //- config_tyc.link_href = "<?php echo $this->url('terms') ?>"
+    +checkbox(config_tyc)
+
+    - config_tyc = {}
+    - config_tyc.name = 'suscribe'
+    - config_tyc.id = 'suscribe'
+    - config_tyc.label = 'Acepto suscribirme al boletin'
+    +checkbox(config_tyc)
+    
+    input(type="submit")
+
+    <?php echo $this->form()->closeTag(); ?>
+
+
+
+
+    
+block scripts
+  +requireTag('site.register')

@@ -1,0 +1,11 @@
+key:
+    label: Key
+    type: Text
+
+value:
+    label: Value
+    type: Text
+
+csrf:
+    type: Csrf
+

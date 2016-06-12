@@ -1,0 +1,45 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'Registro'
+  - custom.body_cls = 'body--register'
+
+block content
+  .Login
+    h2 Acceso
+    <?php $form = $this->form; ?>
+    <?php $form->setAttribute('class', 'LoginForm'); ?>
+    <?php $form->setAttribute('action', $this->serverUrl(true)); ?>
+    <?php $form->prepare(); ?>
+    <?php echo $this->form()->openTag($form); ?>
+    +csrf_token('login_csrf_token')
+    - config_email = {}
+    - config_email.name = 'login_email'
+    - config_email.label = 'E-Mail'
+    - config_email.required = true
+    - config_email.maxlength = 40
+    +input_email(config_email)
+
+    - config_confirm_password = {}
+    - config_confirm_password.name = 'login_password'
+    - config_confirm_password.label = 'Confirmar Contraseña'
+    - config_confirm_password.required = true
+    - config_confirm_password.minlength = 20
+    - config_confirm_password.maxlength = 40
+    - config_confirm_password.equalTo = '#password'
+    +input_password(config_confirm_password)
+
+    <?php if($show_captcha){ ?>
+    - config_captcha = {}
+    - config_captcha.name = 'captcha'
+    - config_captcha.label = 'Código Captcha'
+    - config_captcha.required = true
+    +captcha(config_captcha)
+    <?php } ?>
+
+    input(type="submit")
+
+    <?php echo $this->form()->closeTag(); ?>
+
+block scripts
+  +requireTag('site.register')

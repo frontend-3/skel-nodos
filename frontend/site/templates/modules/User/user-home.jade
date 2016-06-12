@@ -1,0 +1,12 @@
+extend ../../_layout
+
+prepend html
+  - custom.title = 'Home User with modulare'
+  - custom.body_cls = 'body--home'
+
+block content
+  section.home
+    h2 Jom
+
+block scripts
+  +requireTag('site.home')
