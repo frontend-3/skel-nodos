@@ -5,7 +5,7 @@ module.exports = function(gulp) {
   argv = require('yargs').argv;
 
   plugins = {
-    jade    : require('gulp-jade'),
+    pug     : require('gulp-pug'),
     htmlmin : require('gulp-htmlmin'),
     rename  : require('gulp-rename'),
     notify  : require('gulp-notify')
@@ -16,17 +16,17 @@ module.exports = function(gulp) {
   pretty = argv.format ? true : false;
 
   return gulp.src([
-      '*.jade',
-      '**/*.jade',
-      '!_layout.jade',
-      '!**/_layout.jade',
-      '!includes/**/*.jade',
-      '!mixins/**/*.jade',
-      '!_*.jade'
+      '*.pug',
+      '**/*.pug',
+      '!_layout.pug',
+      '!**/_layout.pug',
+      '!includes/**/*.pug',
+      '!mixins/**/*.pug',
+      '!_*.pug'
       ], {
-          cwd : 'templates/sections'
+          cwd : 'templates/modules'
       })
-      .pipe(plugins.jade({
+      .pipe(plugins.pug({
         pretty: pretty,
         data: {
           config: gulp.config
@@ -36,6 +36,7 @@ module.exports = function(gulp) {
         return "Error Jade " + error.message;
       })))
       .pipe(plugins.rename(function (path){
+        path.dirname = path.dirname.replace(/^([^\/]*)/, '$1/view/site');
         path.extname = gulp.config.settings.template_ext
       }))
       .on("error",plugins.notify.onError(function (error) {

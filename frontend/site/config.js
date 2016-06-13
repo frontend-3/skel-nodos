@@ -41,6 +41,9 @@ var config = {
     }
     return this.settings.static_uri + '/' + url;
   },
+  reverse_url: function() {
+    return "";
+  },
   setEnv : function (env) {
     this.env = env;
   },
