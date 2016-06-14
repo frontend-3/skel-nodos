@@ -7,7 +7,8 @@ module.exports = function(gulp) {
     pug     : require('gulp-pug'),
     htmlmin : require('gulp-htmlmin'),
     rename  : require('gulp-rename'),
-    notify  : require('gulp-notify')
+    notify  : require('gulp-notify'),
+    gulpIf  : require('gulp-if')
   };
   pretty = argv.format ? true : false;
 
@@ -29,14 +30,14 @@ module.exports = function(gulp) {
       .on("error",plugins.notify.onError(function (error) {
         return "Error on change extension: " + error.message;
       }))
-      .pipe(plugins.htmlmin({
+      .pipe(plugins.gulpIf(!pretty, plugins.htmlmin({
         removeComments    : true,
         collapseWhitespace: true,
         minifyJS          : true
       })
       .on("error",plugins.notify.onError(function (error) {
         return "Error htmlmin: " + error.message;
-      })))
+      }))))
       .pipe(gulp.dest(gulp.config.deploy_routes().templates))
       .pipe(plugins.notify(gulp.config.notifyConfig('Jade compiled')));
   }
