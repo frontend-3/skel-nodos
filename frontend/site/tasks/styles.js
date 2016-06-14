@@ -5,7 +5,8 @@ module.exports = function(gulp) {
     stylus  : require('gulp-stylus'),
     cssmin  : require('gulp-cssmin'),
     notify  : require('gulp-notify'),
-    nib     : require('nib')
+    nib     : require('nib'),
+    rename  : require('gulp-rename'),
   };
 
   gulp.task('styles', function() {
@@ -27,6 +28,25 @@ module.exports = function(gulp) {
       })))
       .pipe(gulp.dest(gulp.config.deploy_routes().styles))
       .pipe(plugins.notify(gulp.config.notifyConfig('Stylus compiled')));
+  });
+
+  gulp.task('styles:sprites', function() {
+    return gulp.src([
+      '**.css',
+      ], {
+        cwd : gulp.config.deploy_routes().sprites
+      })
+      .pipe(plugins.stylus({
+        css     : true
+      })
+      .pipe(plugins.rename(function (path){
+        path.extname = ".sprite.styl"
+      }))
+      .on("error",plugins.notify.onError(function (error) {
+        return "Error stylus sprite " + error.message;
+      })))
+      .pipe(gulp.dest(gulp.config.deploy_routes().styles))
+      .pipe(plugins.notify(gulp.config.notifyConfig('Stylus sprite generated')));
   });
 
 }
