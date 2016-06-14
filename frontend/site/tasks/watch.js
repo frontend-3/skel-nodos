@@ -26,12 +26,12 @@ module.exports = function(gulp) {
       var name = filepath.split('/').pop();
 
       if (/_(.*).pug/.test(name)) {
-        pugTask( defaultSrc, {
+        gulp.config.pugTask( defaultSrc, {
           cwd : 'templates/modules'
         });
       } else {
         relative_path = event.path.replace(gulp.config.dirname + path_os.sep, "");
-        pugTask(relative_path, { base: 'templates/modules' });
+        gulp.config.pugTask(relative_path, { base: 'templates/modules' });
       }
     });
 
