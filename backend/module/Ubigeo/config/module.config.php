@@ -48,29 +48,6 @@ return array(
 
         ),
     ),
-    'service_manager' => array(
-        'abstract_factories' => array(
-            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Zend\Log\LoggerAbstractServiceFactory',
-        ),
-        'aliases' => array(
-            'translator' => 'MvcTranslator',
-        ),
-        'factories' => array(
-            'ServiceDepartments' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                return new Ubigeo\Model\WebUbigeoDepartments($dbAdapter);
-            },
-            'ServiceProvinces' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                return new Ubigeo\Model\WebUbigeoProvinces($dbAdapter);
-            },
-            'ServiceDistricts' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                return new Ubigeo\Model\WebUbigeoDistricts($dbAdapter);
-            },
-        ),
-    ),
     'translator' => array(
         'locale' => 'en_EN',
         'translation_file_patterns' => array(
@@ -89,17 +66,6 @@ return array(
         ),
     ),
     'view_manager' => array(
-        /*'display_not_found_reason' => true,
-        'display_exceptions' => true,
-        'doctype' => 'HTML5',
-        'not_found_template' => 'Site_404',
-        'exception_template' => 'error/index',
-        'template_map' => array(
-            'Site_layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'Site_404' => __DIR__ . '/../view/error/404.phtml',
-            'Site_error_index' => __DIR__ . '/../view/error/index.phtml',
-        ),
-        */
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),

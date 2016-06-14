@@ -1,0 +1,133 @@
+<?php
+/**
+ * This file is part of Base2 Zend Framework 2 module.
+ */
+
+namespace Base2;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Doctrine\ORM\EntityManager;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+
+/**
+ * Entity Manager Abstract
+ * 
+ * @package Base2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+abstract class EntityManagerAbstract {
+    /**
+     * @var ServiceLocatorInterface Service Manager
+     */
+    protected $serviceManager;
+    
+    /**
+     * @var EntityManager Doctrine Entity Manager
+     */
+    protected $entityManager;
+    
+    /**
+     * @var DoctrineHydrator Doctrine object hydrator
+     */
+     protected $doctrineHydrator;
+     
+    
+    /**
+     * Constructor
+     * 
+     * @param ServiceLocatorInterface $serviceManager
+     * @return void
+     * @since v1.0.0
+     */
+    public function __construct(ServiceLocatorInterface $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        $this->entityManager  = $this->serviceManager->get('Doctrine\ORM\EntityManager');
+    }
+    
+    
+    /**
+     * Get ServiceManager
+     * 
+     * @return ServiceLocatorInterface
+     * @since v1.0.0
+     */
+    public function getServiceManager()
+    {
+        return $this->serviceManager;
+    }
+    
+    
+    /**
+     * Set ServiceManager
+     * 
+     * @param ServiceLocatorInterface $serviceManager
+     * @return EntityManagerAbstract
+     * @since v1.0.0
+     */
+    public function setServiceManager(ServiceLocatorInterface $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        return $this;
+    }
+    
+    
+    /**
+     * Get Entity Manager
+     * 
+     * @return EntityManager
+     * @since v1.0.0
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
+    
+    
+    /**
+     * Set Entity Manager
+     * 
+     * @param EntityManager $entityManager
+     * @return EntityManagerAbstract
+     * @since v1.0.0
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        return $this;
+    }
+    
+    
+    /**
+     * Get DoctrineHydrator
+     * 
+     * @return DoctrineHydrator
+     * @since v1.0.0
+     */
+    public function getDoctrineHydrator()
+    {
+        if (is_null($this->doctrineHydrator)) {
+            $this->doctrineHydrator = new DoctrineHydrator($this->entityManager);
+        }
+        
+        return $this->doctrineHydrator;
+    }
+    
+    
+    /**
+     * Set DoctrineHydrator
+     * 
+     * @param DoctrineHydrator $doctrineHydrator
+     * @return EntityManagerAbstract
+     * @since v1.0.0
+     */
+    public function setDoctrineHydrator($doctrineHydrator)
+    {
+        $this->doctrineHydrator = $doctrineHydrator;
+        return $this;
+    }
+    
+}
+
+

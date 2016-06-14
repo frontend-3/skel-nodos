@@ -1,0 +1,57 @@
+<?php
+/**
+ * This file is part of Florence2 Zend Framework 2 module.
+ */
+
+namespace Florence2;
+
+use Zend\Form\Fieldset as FormFieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
+
+/**
+ * Fieldset
+ * 
+ * The purpose of this class is to create a Fieldset object suitable as target
+ * for a Collection Form Element. As such, it needs to implement
+ * InputFilterProviderInterface. We also need a way to feed in such Input
+ * Filter specification.
+ * 
+ * Florence2 uses this class when asked to return a Fieldset via getFieldset().
+ * 
+ * @package Name
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+class Fieldset extends FormFieldset implements InputFilterProviderInterface
+{
+    /**
+     * @var array Array of Input objects
+     */
+    protected $inputs;
+    
+    
+    /**
+     * Set Inputs
+     * 
+     * @var array $inputs Array of Inputs or specification.
+     * @return Fieldset
+     * @since v1.0.0
+     */
+    public function setInputs($inputs)
+    {
+        $this->inputs = $inputs;
+        return $this;
+    }
+    
+    
+    /**
+     * {@inheritdoc}
+     * @since v1.0.0
+     */
+    public function getInputFilterSpecification()
+    {
+        return $this->inputs;
+    }
+}
+
+

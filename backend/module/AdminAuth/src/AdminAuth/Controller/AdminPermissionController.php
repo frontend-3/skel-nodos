@@ -11,15 +11,8 @@ use AdminAuth\Form\AdminPermissionForm;
 class AdminPermissionController extends AdminBaseController{
 
     public function indexAction() {
-
-        $user = $this->getLoggedUser();
-        $variables = array();
-
-        if(!is_object($user)) {
-            $variables['user']=$user;
-        }
-
         $this->table_service ='ServiceAuthPermission';
+        $variables = array();
         $variables['display_fields'] = array('id','name','status');
         return parent::renderList(50, $variables);
     }
@@ -41,6 +34,6 @@ class AdminPermissionController extends AdminBaseController{
     
     
     public function deleteAction() {
-
+        return $this->redirect()->toRoute('admin');
     }
 }

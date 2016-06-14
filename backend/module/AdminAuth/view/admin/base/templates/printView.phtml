@@ -20,16 +20,25 @@ switch($element['type']) {
         <img src="/cms/img/icon-no.gif">
         <?php
         }
+        break;
+        
     case 'File':
         if($record->has_file($name)) {
             $filename = $record->files()->$name->filename;
             $fe       = $flr->elements[$name];
             
-            if(isset($fe['admin']) && isset($fe['admin']['view_as']) && $fe['admin']['view_as'] == 'image') {
-                echo '<img src="' . $fe['admin']['path'] . $filename . '" style="max-width: 300px; max-height: 300px">';
-            }
-            else {
-                echo $filename;
+            if(isset($fe['admin'])) {
+                if(isset($fe['admin']['view_as'])) {
+                    if($fe['admin']['view_as'] == 'image') {
+                        echo '<img src="' . $fe['admin']['path'] . $filename . '" style="max-width: 300px; max-height: 300px">';
+                    }
+                    elseif($fe['admin']['view_as'] == 'download') {
+                        echo $filename . '<br>(<a href="' . $fe['admin']['path'] . $filename . '" target="_blank">Download</a>)';
+                    }
+                    else {
+                        echo $filename;
+                    }
+                }
             }
         }
         break;

@@ -1,73 +1,74 @@
 <?php 
-$attributes=$element->getAttributes();
-$label = $element->getLabel();
+$element = $flr->elements[$name];
 
+$label = (isset($element['label']) ? $element['label'] : $name);
 
-if(!array_key_exists('type', $attributes)){
-    echo $this->formCollection($element);
-}else{
-    $type=$attributes['type'];
-    $name=$attributes['name'];    
-    if($label!='') {
-        echo "<div class='form-group'>";
-        echo "<div class='col-sm-2'>";
-        echo $label;
-        echo "</div>";
-        echo "<div class='col-sm-10'>";
-        switch($type){
-            case 'text':
-                echo $this->FormInput($element);
-                break;
-            case 'select':
-                echo $this->FormSelect($element);
-                break;
-            case 'multi_checkbox':
-                echo $this->FormMultiCheckbox($element);
-                break;
-            case 'email':
-                echo $this->FormEmail($element);
-                break;
-            case 'password':
-                echo $this->FormPassword($element);
-                break;
-            case 'checkbox':
-                echo $this->FormCheckbox($element);
-                break;
-            case 'textarea':
-                echo $this->formTextArea($element);
-                break;
-            case 'file':
-                echo $this->formFile($element);
-                if(isset($files) && array_key_exists($name,$files)){
-                    if(!is_array($files[$name])){
-                    ?>
-                    <a class="images" href="<?php echo "/".$files[$name]; ?>">Ver 
-                    Imagen</a>
-                <?php
-                    }else{
-                     ?>
-                     <a class="images" href="<?php echo "/".$files[$name][0]['path']; ?>">Ver 
-                    Imagen</a>
-                     <?php   
-                    }
+echo "<tr><td>";
+echo $label;
+echo "</td><td>";
+
+switch($element['type']) {
+    case 'Text':
+    case 'Number':
+        echo $this->FormInput($form_element);
+        break;
+    
+    case 'Select':
+        echo $this->FormSelect($form_element);
+        break;
+    
+    case 'MultiCheckbox':
+        echo $this->FormMultiCheckbox($form_element);
+        break;
+    
+    case 'Email':
+        echo $this->FormEmail($form_element);
+        break;
+    
+    case 'Password':
+        echo $this->FormPassword($form_element);
+        break;
+    
+    case 'Checkbox':
+        echo $this->FormCheckbox($form_element);
+        break;
+    
+    case 'Textarea':
+        echo $this->formTextArea($form_element);
+        break;
+    
+    case 'File':
+        if($record->has_file($name)) {
+            echo $record->files()->$name->filename . ' ';
+            if(isset($element['admin']) && isset($element['admin']['view_as'])) {
+                if($element['admin']['view_as'] == 'image') {
+                    echo '(<a class="images" href="' . $element['admin']['path'] . $record->files()->$name->filename . '">Show image</a>)';
                 }
-                if(isset($object)){
-                    ?>
-                    <a class="images" href="<?php echo "/".$object; ?>">Ver 
-                    <?php
+                else {
+                    echo '(<a class="images" href="' . $element['admin']['path'] . $record->files()->$name->filename . '" target="_blank">Download file</a>)';
                 }
-				/*
+            }
+            else {
+                echo $record->files()->$name->filename;
+            }
+            echo '<br>';
+            
+            if(isset($element['admin']) && isset($element['admin']['accept_remove']) && $element['admin']['accept_remove'] == true) {
                 ?>
-                <a class="img-tooltip" data-toggle="tooltip" data-original-title="Tamaño 220x220" href="javascript:void(0)">(?)</a>
+                <input type="checkbox" name="_remove_<?= $name ?>" value='1'> Remove file<br>
                 <?php
-				*/
-                break;
+            }
         }
-        echo $this->formElementErrors()->render($element);
-        echo "</div>";
-        echo "</div>";
-
-    }
+        echo $this->formFile($form_element);
+        
+        break;
+    
+    default:
+        echo $type;
+        break;
 }
+echo $this->formElementErrors()->render($form_element);
+echo "</td>";
+echo "</tr>";
 
- ?>
+?>

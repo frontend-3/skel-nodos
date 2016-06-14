@@ -258,7 +258,6 @@ class AdminBaseController extends BaseController {
         $route = explode("/", $this->get_routed_match());
         $route = $route[0] . '/' . $route[1];
         $table = $this->SL()->get($this->table_service);
-        $files_table = $this->SL()->get('ServiceFileTable');
         $field = null;
         $service = null;
         $foreign_key = null;

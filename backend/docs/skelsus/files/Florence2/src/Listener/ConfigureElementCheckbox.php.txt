@@ -1,0 +1,41 @@
+<?php
+/**
+ * This file is part of Florence2 Zend Framework 2 module.
+ */
+
+namespace Florence2\Listener;
+
+use Zend\Stdlib\ArrayUtils;
+
+/**
+ * Configure Checkbox Element Listener
+ * 
+ * @package Florence2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+class ConfigureElementCheckbox
+{
+    /**
+     * Configure
+     * 
+     * @return void
+     * @since v1.0.0
+     */
+    static function configure($e)
+    {
+        $definition = $e->getTarget();
+        
+        $validators = $definition->get('validators');
+        $validators[] = [
+            'Florence2\Validator\CheckboxChecked' => [
+                'required' => $definition->get('required')
+            ],
+        ];
+        $definition->set('validators', $validators);
+    }
+}
+
+
+
+

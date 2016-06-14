@@ -1,0 +1,8 @@
+#!/bin/bash
+rm -Rf skelsus/*
+
+phpdoc -d ../module/Base2/src \
+       -d ../module/Ubigeo2/src \
+       -d ../module/Florence2/src \
+       -t skelsus/
+

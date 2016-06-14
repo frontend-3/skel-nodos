@@ -14,6 +14,94 @@ if(isset($plugings) && !is_null($plugings)) {
     }
 }
 
+if($has_ubigeo) {
+    $form->setAttribute('data-source-provinces', '/provinces');
+    $form->setAttribute('data-source-districts', '/districts');
+    
+?>
+
+<script>
+  function loadProvinces() {
+    var $this = $(this),
+      selectedVal = $this.val(),
+      $el = $('#province'),
+      $sub_el = $('#district'),
+      html = '<option value="">Selecciona</option>', item;
+
+    if (selectedVal === '') {
+      $el.html(html)
+         .attr('disabled');
+
+      $el.parent()
+         .addClass('is-disabled');
+    } else {
+
+      $el.html(html);
+      $el.removeAttr('disabled');
+      $el.parent().removeClass('is-disabled');
+      $el.trigger('change');
+      $sub_el.html(html).attr('disabled', 'disabled');
+      $sub_el.parent().addClass('is-disabled');
+      $sub_el.trigger('change');
+
+      $.post($('form').attr('data-source-provinces'), {
+        'departmentID': selectedVal
+      }).done(function(data) {
+        for (item in data) {
+          html += '<option value="' + data[item].id + '">' + data[item].name + '</option>';
+        }
+        $el.html(html);
+      });
+    }
+  };
+
+  function loadDistricts() {
+    var $el = $('#district'),
+      $dept = $('#department'),
+      $this = $(this),
+      html = '<option value="">Selecciona</option>',
+      selectedVal = $this.val(),
+      item;
+
+    if (selectedVal === '') {
+      $el.html(html);
+      $el.attr('disabled', 'disabled');
+      $el.parent().addClass('is-disabled');
+      $el.trigger('change');
+    } else {
+      $el.removeAttr('disabled');
+      $el.parent().removeClass('is-disabled');
+      $el.trigger('change');
+      $.post($('form').attr('data-source-districts'), {
+        'provinceID': $this.val(),
+        'departmentID': $dept.val(),
+      }).done(function(data) {
+        for (item in data) {
+          html += '<option value="' + data[item].id + '">' + data[item].name + '</option>';
+        }
+        $el.html(html);
+      });
+    }
+  };
+
+  function setupRegisterForm() {
+    var dpt = $('#department'),
+      prov = $('#province'),
+      dist = $('#district');
+
+    if (prov.length > 0) {
+      dpt.on('change', loadProvinces);
+      prov.on('change', loadDistricts);
+    }
+  };
+
+  $(document).on('ready', function(){
+    setupRegisterForm();
+  });
+</script>
+<?php
+}
+
 if(isset($url)) {
 ?>
 <div id="url" data-url=<?php echo $url; ?>></div>
@@ -23,7 +111,7 @@ if(isset($url)) {
 }
 ?>
 
-<a class="btn btn-primary" href="<?php echo $this->url($route); ?>">Regresar</a>
+<a class="btn btn-primary" href="<?php echo $this->url($route); ?>">Go back</a>
 
 <h1><?= $title ?></h1>
 
@@ -37,7 +125,6 @@ if(isset($errors) && count($errors) > 0) {
 <?php
 }
 
-$form = $this->form;
 $form->setAttribute('action', $this->serverUrl(true));
 $form->setAttribute('class', 'form-horizontal');
 $form->prepare();

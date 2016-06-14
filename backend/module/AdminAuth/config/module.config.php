@@ -287,38 +287,6 @@ return array(
     ),
     'view_helpers' => array(
     ),
-    'service_manager' => array(
-        'abstract_factories' => array(
-            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Zend\Log\LoggerAbstractServiceFactory',
-        ),
-        'aliases' => array(
-            'translator' => 'MvcTranslator',
-        ),
-        'factories'=>array(
-            'ServiceAuthUser' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                $table = new AdminAuth\Model\AdminUserTable($dbAdapter);
-                return $table;
-            },
-            'ServiceAuthRole' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                $table = new AdminAuth\Model\AdminRoleTable($dbAdapter);
-                return $table;
-            },
-            'ServiceAuthPermission' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                $table = new AdminAuth\Model\AdminPermissionTable($dbAdapter);
-                return $table;
-            },
-            'ServiceAuthRolePermission' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                $table = new AdminAuth\Model\AdminRolePermissionTable($dbAdapter);
-                return $table;
-            },
-
-        )
-    ),
     'translator' => array(
         'locale' => 'en_EN',
         'translation_file_patterns' => array(
@@ -341,8 +309,8 @@ return array(
         ),
     ),
     'view_manager' => array(
-        'display_not_found_reason' => true,
-        'display_exceptions' => true,
+        'display_not_found_reason' => (IN_PRODUCTION == false),
+        'display_exceptions'       => (IN_PRODUCTION == false),
         'doctype' => 'HTML5',
         'not_found_template' => 'Admin_404',
         'exception_template' => 'Admin_Error',

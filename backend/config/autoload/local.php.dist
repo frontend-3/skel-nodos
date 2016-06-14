@@ -1,0 +1,77 @@
+<?php
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ *
+ * @NOTE: This file is ignored from Git by default with .gitignore. This is a
+ * good practice, as it prevents sensitive credentials from accidentally being
+ * committed into version control.
+ */
+
+include('database.php');
+
+return array(
+    'service_manager' => array(
+        'factories' => array(
+            'PdoResource' => 'Base2\PdoResourceFactory',
+        ),
+    ),
+    
+    'db' => array(
+        'driver' => 'Pdo',
+        'dsn' => "mysql:dbname=$database;host=$host",
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+        'username' => $username,
+        'password' => $password,
+    ),
+    
+    'eloquent' => array(
+        'host'      => '127.0.0.1',
+        'database'  => $database,
+        'username'  => $username,
+        'password'  => $password,
+        'driver'    => 'mysql',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => ''
+    ),
+    
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'pdo' => 'PdoResource',
+                'doctrine_type_mappings' => array(
+                    'enum' => 'string'
+                ),
+            ),
+        ),
+    ),
+    
+    'site' => array(
+        'show_backend_template' => false,
+    ),
+    
+    'view_manager' => array(
+        'base_path' => '/',
+    ),
+    
+    'quickmail' => array(
+        'transport' => 'inmemory',
+        
+        'from_address' => 'jaime.wong@nodosdigital.pe',
+        'from_name'    => 'Jaime G. Wong',
+        
+        'host' => 'smtp.gmail.com',
+        'username' => 'jaime.wong@nodosdigital.pe',
+        'password' => '***',
+        'connection_class' => 'login',
+        'ssl' => 'tls',
+        'port' => 587,
+    ),
+);

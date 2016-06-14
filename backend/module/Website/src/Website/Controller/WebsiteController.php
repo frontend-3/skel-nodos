@@ -1,12 +1,12 @@
 <?php
-
 namespace Website\Controller;
-use Base\BaseController;
-use Florence\Florence;
 
-class WebsiteController extends BaseController {
+use Base2\Base2Controller;
+
+class WebsiteController extends Base2Controller {
+    
     public function indexAction() {
-        return $this->render('website/index');
+        return $this->render();
     }
 }
 

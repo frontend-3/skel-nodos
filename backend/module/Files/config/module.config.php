@@ -14,22 +14,6 @@ return array(
     ),
     'view_helpers' => array(
     ),
-    'service_manager' => array(
-        'abstract_factories' => array(
-            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Zend\Log\LoggerAbstractServiceFactory',
-        ),
-        'aliases' => array(
-            'translator' => 'MvcTranslator',
-        ),
-        'factories'=>array(
-            'ServiceFileTable' => function($sm) {
-                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                $table = new Files\Model\File($dbAdapter);
-                return $table;
-            },
-        )
-    ),
     'translator' => array(
         'locale' => 'en_EN',
         'translation_file_patterns' => array(

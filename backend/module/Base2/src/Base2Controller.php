@@ -1,0 +1,132 @@
+<?php
+/**
+ * This file is part of Base2 Zend Framework 2 module.
+ */
+
+namespace Base2;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+
+/**
+ * Extended class for Controllers.
+ * 
+ * All of our Controllers should extend this class. It provides several
+ * convenience methods to ease development.
+ * 
+ * @package Base2
+ * @version v2.0.0
+ * @author Jaime G. Wong <jaime.wong@nodosdigital.pe>
+ * @author Eduardo Flores <eduardo.flores@nodosdigital.pe>
+*/
+class Base2Controller extends AbstractActionController
+{
+    /**
+     * Returns the View Template name.
+     * 
+     * If no template name is specified, the name is inferred from the
+     * Controller name and Action name.
+     * 
+     * In any case, the name is always subject to change according to the
+     * configuration variable `show_backend_template`. If `true` then the
+     * view template name is appended an underscore (`_`) prefix.
+     * 
+     * Example: `website\index` is converted to `website\_index`.
+     * 
+     * @param string $template Optional name of template.
+     * @return string
+     * @since v1.0.0
+     * 
+     */
+    public function getViewTemplateName($template = '')
+    {
+        $show_backend_template = $this->showBackendTemplate();
+        
+        if ($template == '') {
+            $controllerNameParts = $this->getControllerNameParts();
+            $controller_name = $controllerNameParts['controller'];
+            $action_name     = $controllerNameParts['action'];
+            
+            $template = $controller_name .
+                        '/' .
+                        ($show_backend_template ? '_' : '') .
+                        $action_name;
+            
+        } else {
+            if ($show_backend_template) {
+                // Add the underscore prefix
+                $parts = array_reverse(explode('/', $template));
+                $parts[0] = '_' . $parts[0];
+                $template = join(array_reverse($parts), '/');
+            }
+        }
+        
+        return $template;
+    }
+    
+    
+    /**
+     * Render a default PHP View.
+     * 
+     * The name of the template is subject to change because of the
+     * `show_backend_template` config variable. See `getViewTemplateName()`
+     * for details.
+     * 
+     * @param string $template Name of the template to render.
+     * @param array|Traversable $variables View variables
+     * @param array|Traversable $options View options
+     * @return ViewModel
+     * @since v1.0.0
+     */
+    public function render($template = '', $variables = [], $options = [])
+    {
+        $template = $this->getViewTemplateName($template);
+        
+        $viewModel = new ViewModel;
+        $viewModel->setTemplate($template);
+        $viewModel->setVariables($variables);
+        $viewModel->setOptions($options);
+        
+        return $viewModel;
+    }
+    
+    
+    /**
+     * Returns the value of the config variable `site.show_backend_template`
+     *
+     * @return boolean
+     * @since v2.0.0
+     */
+    public function showBackendTemplate()
+    {
+        $config = $this->getServiceLocator()->get('Config');
+        
+        if (!array_key_exists('site', $config)) {
+            throw new \OutOfRangeException("'site' configuration not found");
+        }
+        if (!array_key_exists('show_backend_template', $config['site'])) {
+            throw new \OutOfRangeException("'site.show_backend_template' configuration not found");
+        }
+        
+        return $config['site']['show_backend_template'];
+    }
+    
+    
+    /**
+     * Returns an array with the parts of the Controller name and Action
+     *
+     * @return array
+     * @since v2.0.0
+     */
+    public function getControllerNameParts()
+    {
+        $controller_name = strtolower(str_replace('Controller', '', $this->params('controller')));
+        $action_name     = $this->params('action');
+        
+        return [
+            'controller' => $controller_name,
+            'action'     => $action_name,
+        ];
+    }
+}
+

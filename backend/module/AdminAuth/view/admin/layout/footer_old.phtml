@@ -1,0 +1,46 @@
+</div>
+</div>
+</div>
+                    
+<hr>
+    <footer>
+        <center>
+        &copy; <?php echo date('Y') ?> Nodos Digital - All rights reserved
+        </center>
+    </footer>
+    <?php echo $this->inlineScript() ?>
+<script src="<?php echo $this->basePath(); ?>/cms/js/bootstrap-datepicker.js"></script>
+<script>
+
+    $(document).ready(function() {
+         $('.picker').datepicker()
+            .on('changeDate', function(ev){
+                $('.picker').datepicker('hide');
+        });
+
+        $(".img-tooltip").tooltip();
+        $('.image').each(function(i) {
+            var img = $(this).nextAll('.img-tooltip');                     
+            img.attr('data-original-title',$(this).attr('data-size'));
+        });
+        
+        $(".images").fancybox({});
+        $('.background_color').colorpicker();
+
+    });
+    if($('.wysiwyg').length > 0){
+        $('.wysiwyg').each(function(){
+            CKEDITOR.replace(this.id, {
+                toolbar: [
+                    {name: 'document', items: ['Source']},
+                    {name: 'clipboard', items: ['Paste', 'PasteText', 'PasteFromWord']},
+                    {name: 'basicstyles', items: ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList','Indent','Outdent']},
+                    {name: 'links', items: ['Link']},
+                    {name: 'insert', items: ['SpecialChar']}
+                ]
+            });  
+        });
+    }
+</script>
+</body>
+</html>

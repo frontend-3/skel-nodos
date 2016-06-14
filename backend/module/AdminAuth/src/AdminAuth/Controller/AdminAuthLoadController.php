@@ -48,7 +48,7 @@ class AdminAuthLoadController extends AbstractActionController{
         $routes = $this->getServiceLocator()->get('Config')['router']['routes'];
         $keys = array_keys($routes['admin']['child_routes']);
         $exclude = array('system_users', 'system_roles', 'system_permissions', 'welcome', 'logout');
-        $methods = array('list', 'add', 'edit', 'view', 'update', 'delete');
+        $methods = array('list', 'add', 'edit', 'update', 'view', 'delete');
         $time = date('Y-m-d H:i:s');
         $table_permission = $this->getServiceLocator()->get('ServiceAuthPermission');
         $table_role = $this->getServiceLocator()->get('ServiceAuthRole');
@@ -96,9 +96,9 @@ class AdminAuthLoadController extends AbstractActionController{
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
         $id_role = $table_role->save_array($data);
-        $perms = array('system-users', 'system-roles', 'system-permissions');
+        $perms = array('system_users', 'system_roles', 'system_permissions');
 
-        $methods = array('add', 'edit', 'view', 'delete');
+        $methods = array('list', 'add', 'edit', 'update', 'view', 'delete');
 
         foreach ($perms as $perm) {
             foreach ($methods as $meth) {

@@ -12,7 +12,7 @@ if ($this->pageCount): ?>
         <?php if (isset($this->previous)): ?>
             <li>
                 <a href="<?php echo $url ; ?>?page=<?php echo $this->previous; ?>">
-                    << Página anterior
+                    <<
                 </a>
             </li>
         <?php else: ?>
@@ -48,7 +48,7 @@ if ($this->pageCount): ?>
         <?php else: ?>
             <li class="disabled">
                 <a href="#">
-                    Siguiente página >>
+                    >>
                 </a>
             </li>
         <?php endif; ?>
