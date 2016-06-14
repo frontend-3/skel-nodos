@@ -1,31 +1,18 @@
 module.exports = function(gulp) {
-  var plugins,
-      argv;
+  var plugins;
+  var argv;
 
   argv = require('yargs').argv;
-
   plugins = {
     pug     : require('gulp-pug'),
     htmlmin : require('gulp-htmlmin'),
     rename  : require('gulp-rename'),
     notify  : require('gulp-notify')
   };
-
-  gulp.task('templates', function() {
-
   pretty = argv.format ? true : false;
 
-  return gulp.src([
-      '*.pug',
-      '**/*.pug',
-      '!_layout.pug',
-      '!**/_layout.pug',
-      '!includes/**/*.pug',
-      '!mixins/**/*.pug',
-      '!_*.pug'
-      ], {
-          cwd : 'templates/modules'
-      })
+  function pugTask(src, options) {
+    return gulp.src(src, options)
       .pipe(plugins.pug({
         pretty: pretty,
         data: {
@@ -37,7 +24,7 @@ module.exports = function(gulp) {
       })))
       .pipe(plugins.rename(function (path){
         path.dirname = path.dirname.replace(/^([^\/]*)/, '$1/view/site');
-        path.extname = gulp.config.settings.template_ext
+        path.extname = gulp.config.settings.template_ext;
       }))
       .on("error",plugins.notify.onError(function (error) {
         return "Error on change extension: " + error.message;
@@ -52,5 +39,21 @@ module.exports = function(gulp) {
       })))
       .pipe(gulp.dest(gulp.config.deploy_routes().templates))
       .pipe(plugins.notify(gulp.config.notifyConfig('Jade compiled')));
+  }
+
+  gulp.task('templates', function() {
+    return pugTask([
+        '*.pug',
+        '**/*.pug',
+        '!_layout.pug',
+        '!**/_layout.pug',
+        '!includes/**/*.pug',
+        '!mixins/**/*.pug',
+        '!_*.pug'
+      ], {
+        cwd : 'templates/modules'
+      });
   });
+
+  gulp.config.pugTask = pugTask;
 }
