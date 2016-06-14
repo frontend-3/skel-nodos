@@ -1,4 +1,5 @@
 var config = {
+  dirname: __dirname,
   deploy_routes : function () {
     var routes = {},
         base,
@@ -16,7 +17,7 @@ var config = {
         fonts: static_path + 'fonts/',
         scripts: static_path + 'scripts/',
         sprites: static_path + 'sprites/',
-         svg: static_path + 'svg/',
+        svg: static_path + 'svg/',
       }
     } else {
       base = 'build';
@@ -30,7 +31,7 @@ var config = {
         fonts: static_path + '/fonts',
         scripts: static_path + '/scripts',
         sprites: static_path + '/sprites',
-         svg: static_path + 'svg/',
+        svg: static_path + 'svg/',
       }
     }
     return routes;
