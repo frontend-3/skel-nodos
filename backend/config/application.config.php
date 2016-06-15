@@ -15,11 +15,10 @@ if (APP_ENV == 'production') {
 
 $modules = array(
     'Base2',
-    'DoctrineModule',
-    'DoctrineORMModule',
+    //'DoctrineModule',
+    //'DoctrineORMModule',
     'Ubigeo2',
     'Florence2',
-    
     'Site',
     //'AdminAuth',
     //'User',
