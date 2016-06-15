@@ -26,7 +26,16 @@ module.exports = function(gulp) {
       var name = filepath.split('/').pop();
 
       if (/_(.*).pug/.test(name)) {
-        gulp.config.pugTask( defaultSrc, {
+        console.log('if');
+        gulp.config.pugTask([
+        '*.pug',
+        '**/*.pug',
+        '!_layout.pug',
+        '!**/_layout.pug',
+        '!includes/**/*.pug',
+        '!mixins/**/*.pug',
+        '!_*.pug'
+      ], {
           cwd : 'templates/modules'
         });
       } else {
