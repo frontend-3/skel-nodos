@@ -24,7 +24,8 @@ module.exports = function(gulp) {
         return "Error Jade " + error.message;
       })))
       .pipe(plugins.rename(function (path){
-        path.dirname = path.dirname.replace(/^([^\/]*)/, '$1/view/site');
+        var namespace = (path.dirname).charAt(0).toLowerCase() + (path.dirname).slice(1);
+        path.dirname = path.dirname.replace(/^([^\/]*)/, '$1/view/' + namespace);
         path.extname = gulp.config.settings.template_ext;
       }))
       .on("error",plugins.notify.onError(function (error) {
