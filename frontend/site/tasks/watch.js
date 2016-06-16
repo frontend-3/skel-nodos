@@ -26,7 +26,6 @@ module.exports = function(gulp) {
       var name = filepath.split('/').pop();
 
       if (/_(.*).pug/.test(name)) {
-        console.log('if');
         gulp.config.pugTask([
         '*.pug',
         '**/*.pug',
