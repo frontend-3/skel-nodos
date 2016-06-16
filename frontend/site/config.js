@@ -9,7 +9,6 @@ var config = {
       static_path =  base + 'public/site/';
       routes = {
         base: '',
-        //templates: base + 'module/User/view/site/',
         templates: base + 'module/',
         static: static_path,
         styles: static_path + 'styles/',
@@ -38,7 +37,7 @@ var config = {
   },
   static_url: function(url) {
     if (this.env == 'prod') {
-      return '<?php echo $this->basePath().\'/site/' + url + '\';?>'
+      return '<?= $this->basePath().\'/site/' + url + '\';?>'
     }
     return this.settings.static_uri + '/' + url;
   },
