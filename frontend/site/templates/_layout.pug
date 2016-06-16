@@ -16,7 +16,6 @@ block html
       title #{config.settings.project_name} | #{custom.title}
       meta( charset='utf-8' )
       meta( http-equiv='X-UA-Compatible', content='IE=edge,chrome=1' )
-      meta( name='description', content='' )
       meta( name="viewport",content="width=device-width,initial-scale=1.0")
       meta( name='description', content!="")
       meta( property="og:type", content!="website")
@@ -47,5 +46,5 @@ block html
           include includes/_footer
         //- Fin footer
       block addons
-        +social(['fb','tw'])      
+        +social(['fb','tw'])
       block scripts
