@@ -221,16 +221,16 @@ class BaseModelPlus {
         $query = "
             SELECT count(id) cantidad 
               FROM " . $this->_table_name . "
-             WHERE slug REGEXP '^".$slug."(-[0-9]*)?$'
+             WHERE slug REGEXP '^" . $slug . "(-[0-9]*)?$'
         ";
 
-        if($exclude_id > 0){
-            $query.= " AND id != $exclude_id";
+        if ($exclude_id > 0) {
+            $query .= " AND id != $exclude_id";
         }
 
         $slugCount = $this->_tableGateway->getAdapter()->query($query, array())->current();
         
-        return ($slugCount->cantidad > 0) ? "{$slug}-".$slugCount->cantidad : $slug;
+        return ($slugCount->cantidad > 0) ? "{$slug}-" . $slugCount->cantidad : $slug;
     }
 
 
@@ -323,7 +323,7 @@ class BaseModelPlus {
     public function load_files() {
     // Convenience function for easy loading of Files, provided by the Files
     // Module. Be sure you have added it to the project.
-        $fm = new File($this->dbAdapter);
+        $fm = new File($this->_dbAdapter);
 
         $fs = $fm->all(NULL, array('table_name' => $this->getTableName(), 'table_id' => $this->id));
         $r  = array();

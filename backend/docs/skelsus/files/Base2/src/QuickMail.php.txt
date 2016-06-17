@@ -1,0 +1,222 @@
+<?php
+/**
+ * This file is part of Base2 Zend Framework 2 module.
+ */
+
+namespace Base2;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Mail\Message;
+use Zend\Mime\Part as MimePart;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mail\Transport\TransportInterface;
+use Zend\Mail\Transport\Exception\RuntimeException;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
+use Zend\Mail\Transport\Sendmail as SendmailTransport;
+use Zend\Mail\Transport\InMemory as InMemoryTransport;
+
+/**
+ * Quick setup and wrapping to send mails.
+ * 
+ * This class wraps Zend\Mail in order to configure and send mails as quickly
+ * and simple as possible according to our most common needs when sending mail.
+ * 
+ * By default this means sending an HTML mail via Sendmail, SMTP or InMemory.
+ * 
+ * It depends on a proper configuration defined in local.php (or maybe
+ * partially in global.php) to work. See config/quickmail.config.php.dist
+ * for a sample configuration with explanations.
+ * 
+ * You can get access to the Zend\Mail\Message and Zend\Mail\Transport objects
+ * if you need to handle a special case.
+ * 
+ * @package Base2
+ * @version v1.0.0
+ * @author Jaime G. Wong <jaime.wong@nodosdigital.pe>
+ */
+class QuickMail
+{
+    /**
+     * @var ServiceLocatorInterface Service Manager
+     */
+    protected $serviceManager = null;
+    
+    /**
+     * @var MimePart MIME Part
+     */
+    protected $mimePart = null;
+    
+    /**
+     * @var MimeMessage MIME Message
+     */
+    protected $mimeMessage = null;
+    
+    /**
+     * @var TransportInterface Transport Interface
+     */
+    protected $transport = null;
+    
+    /**
+     * @var Message Message
+     */
+    protected $message = null;
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param ServiceLocatorInterface $serviceManager ServiceManager instance.
+     * @param Message $message Injection of Message.
+     * @param MimePart $mimePart Injection of Mime\Part.
+     * @param MimeMessage $mimeMessage Injection of Mime\Message.
+     * @param TransportInterface Injection of Transport.
+     * @return QuickMail
+     * @since v1.0.0
+     */
+    function __construct(ServiceLocatorInterface $serviceManager, Message $message = null, MimePart $mimePart = null, MimeMessage $mimeMessage = null, TransportInterface $transport = null)
+    {
+        $this->serviceManager = $serviceManager;
+        $configArray = $serviceManager->get('Config');
+        
+        if (!isset($configArray['quickmail'])) {
+            throw new \RuntimeException("No configuration found for mail. Please see the documentation for Base2\QuickMail for information on how to properly setup mail.");
+        }
+        
+        $config = $configArray['quickmail'];
+        
+        if (is_null($message)) {
+            $message = new Message();
+        }
+        $message->addFrom($config['from_address'], $config['from_name']);
+        $this->message = $message;
+        
+        if (is_null($mimePart)) {
+            $mimePart = new MimePart();
+        }
+        $this->mimePart = $mimePart;
+        
+        if (is_null($mimeMessage)) {
+            $mimeMessage = new MimeMessage();
+        }
+        $this->mimeMessage = $mimeMessage;
+        
+        if (is_null($transport)) {
+            if ($config['transport'] == 'sendmail') {
+                $transport = new SendmailTransport();
+            
+            } elseif ($config['transport'] == 'smtp') {
+                $transport = new SmtpTransport();
+                $options   = new SmtpOptions(array(
+                    'host' => $config['host'],
+                    'connection_class'  => $config['connection_class'],
+                    'connection_config' => array(
+                        'ssl'      => $config['ssl'],
+                        'username' => $config['username'],
+                        'password' => $config['password'],
+                    ),
+                    'port' => $config['port'],
+                ));
+                $transport->setOptions($options);
+                
+            } elseif ($config['transport'] == 'inmemory') {
+                $transport = new InMemoryTransport();
+            
+            } else {
+                throw new RuntimeException(sprintf('Unknown or malconfigured transport "%s"', $config['transport']));
+            }
+        }
+        $this->transport = $transport;
+        
+        return $this;
+   }
+   
+   
+   /**
+    * Builds an HTML-content body.
+    * 
+    * @param string $body
+    * @return QuickMail
+    * @since v1.0.0
+    */
+   public function setBody($body)
+   {
+       $this->mimePart->setContent($body);
+       $this->mimePart->type = 'text/html';
+       $this->mimePart->charset = 'UTF-8';
+       
+       $body_part = new MimeMessage();
+       $this->mimeMessage->addPart($this->mimePart);
+       $this->message->setEncoding('UTF-8');
+       $this->message->setBody($this->mimeMessage);
+       
+       return $this;
+   }
+   
+   
+   /**
+    * Set the mail subject.
+    * 
+    * @param string $subject
+    * @return QuickMail
+    * @since v1.0.0
+    */
+   public function setSubject($subject)
+   {
+       $this->message->setSubject($subject);
+       return $this;
+   }
+   
+   
+   /**
+    * Wrapper to Zend\Mail\Message addTo()
+    * @see Zend\Mail\Message::addTo()
+    * 
+    * @param string|AddressDescription|array|Zend\Mail\AddressList|Traversable $email
+    * @param string|null $fullName
+    * @return QuickMail
+    * @since v1.0.0
+    */
+   public function addTo($email, $fullName = null)
+   {
+       $this->message->addTo($email, $fullName);
+       return $this;
+   }
+   
+   
+   /**
+    * Wrapper to the Transport's send()
+    * 
+    * @return void
+    * @since v1.0.0
+    */
+   public function send() {
+        return $this->transport->send($this->message);
+   }
+   
+   
+   /**
+    * Get the Message object
+    * 
+    * @return Message
+    * @since v1.0.0
+    */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+    
+    
+    /**
+     * Get the Transport object
+     * 
+     * @return Zend\Mail\Transport\TransportInterface
+     * @since v1.0.0
+     */
+     public function getTransport()
+     {
+         return $this->transport;
+     }
+}
+
+

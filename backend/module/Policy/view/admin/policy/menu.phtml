@@ -1,9 +1,16 @@
 <?php if(in_array('policy-view',$perms)){ ?>
 <li>
-    <a class="detailed" href="<?php echo $this->url('admin/policy') ?>">
-      <span class="title">Políticas</span>
-      <span class="details">Términos y Condiciones</span>
+    <a class="list-group-item" data-toggle="collapse" href="#nav-policy">Policy 
+        <b class="caret"></b>
     </a>
-    <span class="icon-thumbnail"><i class="fa fa-legal"></i></span>
+    <ul class="collapse" id="nav-policy">
+        <?php if(in_array('policy-view',$perms)){?>
+        <li>
+            <a class="list-group-item" href="
+                <?php echo $this->url('admin/policy') ?>">Términos
+            </a>
+        </li>
+        <?php }?>
+    </ul>
 </li>
 <?php } ?>

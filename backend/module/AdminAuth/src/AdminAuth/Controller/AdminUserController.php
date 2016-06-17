@@ -52,6 +52,6 @@ class AdminUserController extends AdminBaseController{
     }
 
     public function deleteAction(){
-
+        return $this->redirect()->toRoute('admin');
     }
 }

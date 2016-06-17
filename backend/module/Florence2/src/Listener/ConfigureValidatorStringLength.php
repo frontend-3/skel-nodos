@@ -1,0 +1,47 @@
+<?php
+/**
+ * This file is part of Florence2 Zend Framework 2 module.
+ */
+
+namespace Florence2\Listener;
+
+use Zend\Stdlib\ArrayUtils;
+
+/**
+ * Configure StringLength Validator Listener
+ * 
+ * @package Florence2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+class ConfigureValidatorStringLength
+{
+    /**
+     * Configure
+     * 
+     * @return void
+     * @since v1.0.0
+     */
+    static function configure($e)
+    {
+        $definition = $e->getTarget();
+        $specs      = $definition->getValidatorsSpecification();
+        
+        $defaults = [
+            'options' => [
+                'encoding' => 'UTF-8',
+                'messages' => [
+                    'stringLengthTooShort' => 'No debe contener menos de %min% caracteres',
+                    'stringLengthTooLong' => 'No debe contener más de %max% caracteres',
+                ],
+            ],
+        ];
+        $specs['stringlength'] = ArrayUtils::merge($defaults, $specs['stringlength']);
+        
+        $definition->setValidatorsSpecification($specs);
+    }
+}
+
+
+
+

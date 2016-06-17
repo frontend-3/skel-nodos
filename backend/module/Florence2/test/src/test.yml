@@ -1,0 +1,9 @@
+first_name:
+    type: Text
+
+age:
+    type: Text
+
+accept:
+    type: Checkbox
+

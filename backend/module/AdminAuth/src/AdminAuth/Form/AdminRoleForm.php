@@ -32,12 +32,11 @@ class AdminRoleForm extends Form
 
         $e = new Element\Text('name');
         $e->setLabel('Name');
-        $e->setAttributes(array(
+        $e->setOptions(array(
             'type' => 'text',
             'id' => 'name',
             'placeholder' => '',
             'readonly' => false,
-            'class' => 'form-control',
             'maxlength' => 45,
         ));
         $this->add($e);

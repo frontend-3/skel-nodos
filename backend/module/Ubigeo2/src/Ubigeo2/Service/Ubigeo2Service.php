@@ -1,0 +1,192 @@
+<?php
+/**
+ * This file is part of Ubigeo2 Zend Framework 2 module.
+ */
+
+namespace Ubigeo2\Service;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Doctrine\ORM\EntityManager;
+
+/**
+ * Ubigeo2Service
+ * 
+ * @package Ubigeo2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ * @ORM\Entity
+ * @ORM\Table(name="ubigeo_districts")
+ */
+class Ubigeo2Service {
+    /**
+     * @var ServiceLocatorInterface Service Manager
+     */
+    protected $serviceManager;
+    
+    /**
+     * @var EntityManager Doctrine Entity Manager
+     */
+    protected $entityManager;
+    
+    /**
+     * Constructor
+     * 
+     * @param ServiceLocatorInterface $serviceManager
+     * @return void
+     * @since v1.0.0
+     */
+    public function __construct(ServiceLocatorInterface $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        $this->entityManager  = $this->serviceManager->get('Doctrine\ORM\EntityManager');
+    }
+    
+    
+    /**
+     * Set Entity Manager
+     * 
+     * @param EntityManager $entityManager
+     * @return void
+     * @since v1.0.0
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+    
+    
+    /**
+     * Get list of Departments
+     * 
+     * Returns a simple array ready for JSON comsumption.
+     * 
+     * @return array
+     * @since v1.0.0
+     */
+    public function getDepartmentsList()
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $query = $qb->select('d.id, d.name')
+                    ->from('Ubigeo2\Entity\Department', 'd')
+                    ->orderBy('d.name')
+                    ->getQuery();
+        $list = $query->getResult();
+        return $list;
+    }
+    
+    
+    /**
+     * Get list of Provinces
+     * 
+     * Returns a simple array ready for JSON comsumption.
+     * 
+     * @param integer $departmentID Department ID
+     * @return array
+     * @since v1.0.0
+     */
+    public function getProvincesList($departmentID)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $query = $qb->select('p.id, p.name')
+                    ->from('Ubigeo2\Entity\Province', 'p')
+                    ->where('p.department = :departmentID')
+                    ->orderBy('p.name')
+                    ->setParameters([
+                        'departmentID' => $departmentID,
+                    ])
+                    ->getQuery();
+        $list = $query->getResult();
+        
+        return $list;
+    }
+    
+    
+    /**
+     * Get list of Districts
+     * 
+     * Returns a simple array ready for JSON comsumption.
+     * 
+     * @param integer $departmentID Department ID
+     * @param integer $provinceID Province ID
+     * @return array
+     * @since v1.0.0
+     */
+    public function getDistrictsList($departmentID, $provinceID)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $query = $qb->select('d.id, d.name')
+                    ->from('Ubigeo2\Entity\District', 'd')
+                    ->where('d.department = :departmentID
+                         AND d.province= :provinceID
+                    ')
+                    ->orderBy('d.name')
+                    ->setParameters([
+                        'departmentID' => $departmentID,
+                        'provinceID' => $provinceID,
+                    ])
+                    ->getQuery();
+        $list = $query->getResult();
+        return $list;
+    }
+    
+    
+    /**
+     * Returns a Departments list of SELECT options
+     * 
+     * @since v1.0.0
+     * @return array
+     */
+    public function getDepartmentOptions()
+    {
+        $list = $this->getDepartmentsList();
+        
+        $options = [];
+        foreach ($list as $option) {
+            $options[$option['id']] = $option['name'];
+        }
+        
+        return $options;
+    }
+    
+    
+    /**
+     * Returns a Provinces list of SELECT options
+     * 
+     * @param integer $departmentID
+     * @return array
+     * @since v1.0.0
+     */
+    public function getProvinceOptions($departmentID)
+    {
+        $list = $this->getProvincesList($departmentID);
+        
+        $options = [];
+        foreach ($list as $option) {
+            $options[$option['id']] = $option['name'];
+        }
+        
+        return $options;
+    }
+    
+    
+    /**
+     * Returns a District list of SELECT options
+     * 
+     * @param integer $departmentID
+     * @param integer $provinceID
+     * @return array
+     * @since v1.0.0
+     */
+    public function getDistrictOptions($departmentID, $provinceID)
+    {
+        $list = $this->getDistrictsList($departmentID, $provinceID);
+        
+        $options = [];
+        foreach ($list as $option) {
+            $options[$option['id']] = $option['name'];
+        }
+        
+        return $options;
+    }
+}
+

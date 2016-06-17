@@ -24,17 +24,11 @@ class AdminLoginForm extends Form {
         $this->add($e);
         $username = new Element\Text('username');
         $username->setLabel('Username')
-            ->setAttribute('size', '50')
-            ->setAttribute('placeholder', 'Usuario')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('required', true);
+            ->setAttribute('size', '50');
         $this->add($username);
         $password = new Element\Password('password');
         $password->setLabel('Password')
-            ->setAttribute('size', '50')
-            ->setAttribute('placeholder', 'Usuario')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('required', true);
+            ->setAttribute('size', '50');
         $this->add($password);
 
         $csrf = new Element\Csrf('csrf');
@@ -44,7 +38,7 @@ class AdminLoginForm extends Form {
         $submit->setValue('Log In');
         $submit->setAttributes(array(
             'type' => 'submit',
-            'class' => 'btn btn-primary btn-cons m-t-10',
+            'class' => 'btn btn-primary btn-large',
         ));
         $this->add($submit);
     }

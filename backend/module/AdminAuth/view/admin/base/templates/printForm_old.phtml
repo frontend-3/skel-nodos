@@ -1,0 +1,76 @@
+<?php 
+$attributes=$element->getAttributes();
+$label = $element->getLabel();
+
+if(!array_key_exists('type', $attributes)){
+    echo $this->formCollection($element);
+}
+else {
+    $type = $attributes['type'];
+    $name = $attributes['name'];    
+    
+    if($label != '') {
+        echo "<tr>";
+        echo "<td>";
+        echo $label;
+        echo "</td>";
+        echo "<td>";
+        
+        switch($type){
+            case 'text':
+            case 'number':
+                echo $this->FormInput($element);
+                break;
+            case 'select':
+                echo $this->FormSelect($element);
+                break;
+            case 'multi_checkbox':
+                echo $this->FormMultiCheckbox($element);
+                break;
+            case 'email':
+                echo $this->FormEmail($element);
+                break;
+            case 'password':
+                echo $this->FormPassword($element);
+                break;
+            case 'checkbox':
+                echo $this->FormCheckbox($element);
+                break;
+            case 'textarea':
+                echo $this->formTextArea($element);
+                break;
+            case 'file':
+                echo $this->formFile($element);
+                if(isset($files) && array_key_exists($name,$files)){
+                    if(!is_array($files[$name])){
+                    ?>
+                    <a class="images" href="<?php echo "/".$files[$name]; ?>">Ver 
+                    Imagen</a>
+                <?php
+                    }else{
+                     ?>
+                     <a class="images" href="<?php echo "/".$files[$name][0]['path']; ?>">Ver 
+                    Imagen</a>
+                     <?php   
+                    }
+                }
+                if(isset($object)){
+                    ?>
+                    <a class="images" href="<?php echo "/".$object; ?>">Ver 
+                    <?php
+                }
+                ?>
+                <a class="img-tooltip" data-toggle="tooltip" data-original-title="Tamaño 220x220" href="javascript:void(0)">(?)</a>
+                <?php
+                break;
+            default:
+                echo $type;
+                break;
+        }
+        echo $this->formElementErrors()->render($element);
+        echo "</td>";
+        echo "</tr>";
+    }
+}
+
+ ?>

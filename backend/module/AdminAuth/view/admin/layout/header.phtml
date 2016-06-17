@@ -12,64 +12,33 @@
         <!-- Le styles -->
         <?php
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/cms/img/favicon.ico'))
-                ->prependStylesheet($this->basePath() . '/assets/css/style.css')
-                ->prependStylesheet($this->basePath() . '/pages/css/pages.css')
-                ->prependStylesheet($this->basePath() . '/pages/css/pages-icons.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/switchery/css/switchery.min.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/bootstrap-select2/select2.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/jquery-scrollbar/jquery.scrollbar.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/font-awesome/css/font-awesome.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/boostrapv3/css/bootstrap.min.css')
-                ->prependStylesheet($this->basePath() . '/assets/plugins/pace/pace-theme-flash.css')
-
+                ->prependStylesheet($this->basePath() . '/cms/css/style.css')
+                ->prependStylesheet($this->basePath() . '/cms/css/bootstrap-theme.min.css')
+                ->prependStylesheet($this->basePath() . '/cms/css/bootstrap.min.css')
+                ->prependStylesheet($this->basePath() . '/cms/js/bootstrap-colorpicker/css/bootstrap-colorpicker.css')
+                ->prependStylesheet($this->basePath() . '/cms/js/fancybox/jquery.fancybox.css')
+                ->prependStylesheet($this->basePath() . '/cms/css/datepicker.css');
         ?>
         <!-- Scripts -->
         <?php
         echo $this->headScript()
-
-                
-                ->prependFile($this->basePath() . '/assets/js/tables.js')
-                ->prependFile($this->basePath() . '/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js')
-                ->prependFile($this->basePath() . '/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery/jquery-easy.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-unveil/jquery.unveil.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-bez/jquery.bez.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-ios-list/jquery.ioslist.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-actual/jquery.actual.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/bootstrap-select2/select2.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/classie/classie.js')
-                ->prependFile($this->basePath() . '/assets/plugins/switchery/js/switchery.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/datatables-responsive/js/datatables.responsive.js')
-                ->prependFile($this->basePath() . '/assets/plugins/datatables-responsive/js/lodash.min.js')
+                ->prependFile($this->basePath() . '/cms/js/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/cms/js/bootstrap-confirm.js')
                 ->prependFile($this->basePath() . '/cms/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js')
                 ->prependFile($this->basePath() . '/cms/js/fancybox/jquery.fancybox.js')
+                ->prependFile($this->basePath() . '/cms/js/jquery.min.js')
                 
                 ->prependFile($this->basePath() . '/cms/ckeditor/ckeditor.js')
                 
-                ->prependFile($this->basePath() . '/assets/js/scripts.js')
-
-                
                 ->prependFile($this->basePath() . '/cms/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                 ->prependFile($this->basePath() . '/cms/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-
-                ->prependFile($this->basePath() . '/assets/plugins/pace/pace.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/boostrapv3/js/bootstrap.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/modernizr.custom.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery-ui/jquery-ui.min.js')
-                ->prependFile($this->basePath() . '/assets/plugins/jquery/jquery-1.11.1.min.js')
         ;
         ?>
           
     </head>
-        <body class="fixed-header">
-            <!--<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div>
+        <body>
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="icon-bar"></span>
@@ -83,155 +52,62 @@
                             </a>
                         </div>
                     </div>
-                </nav>-->
-
-                                <nav class="page-sidebar" data-pages="sidebar">
-                                  <!-- !BEGIN SIDEBAR MENU TOP TRAY CONTENT-->
-                                  <div class="sidebar-overlay-slide from-top" id="appMenu">
-                                  </div>
-                                  <!-- !END SIDEBAR MENU TOP TRAY CONTENT-->
-
-                                  <!-- !BEGIN SIDEBAR MENU HEADER-->
-                                  <div class="sidebar-header">
-                                    <img src="/assets/img/logo_nodos-big.png" alt="logo" class="brand" data-src="/assets/img/logo_nodos-big.png" data-src-retina="/assets/img/logo_nodos-big.png" height="28">
-                                    <div class="sidebar-header-controls">
-                                      <button type="button" class="btn btn-link visible-lg-inline  m-l-50" data-toggle-pin="sidebar" id="btn-open-sidebar"><i class="fa fs-12"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                <?php if (!is_null($perms)) { ?>
-                                    <div class="sidebar-menu">
-
-                                    <ul class="menu-items" id="menu-sidebar">
-
-                                        <li class="m-t-20">
-                                        <a href="<?php echo $this->url('admin/welcome'); ?>" class="detailed">
-                                          <span class="title">Dashboard</span>
-                                          <span class="details">Escritorio / bienvenida</span>
-                                        </a>
-                                        <span class="icon-thumbnail "><i class="pg-home"></i></span>
-                                      </li>
-
-                                        <?php if (in_array('system-users-view', $perms) || in_array('system-roles-view', $perms) || in_array('system-permissions-view', $perms)) { ?>
-                                        <li class="">
-                                            <a href="javascript:;" class="detailed">
-                                              <span class="arrow"></span>
-                                              <span class="title">Sistema</span>
-                                              <span class="details">Roles y permisos</span>
-                                            </a>
-                                            <span class="icon-thumbnail"><i class="fa fa-users"></i></span>
-                                            <ul class="sub-menu" id="nav-system-users">
-                                                <?php if (in_array('system-users-view', $perms)) { ?>
-                                                <li>
-                                                    <a href="
-                                                        <?php echo $this->url('admin/system_users'); ?>">Usuarios del Sistema
-                                                    </a>
-                                                    <span class="icon-thumbnail">U</span>
-                                                </li>
-                                                <?php } ?>
-                                                <?php if (in_array('system-permissions-view', $perms)) { ?>
-                                                <li>
-                                                    <a href="
-                                                        <?php echo $this->url('admin/system_permissions'); ?>">Permisos
-                                                    </a>
-                                                    <span class="icon-thumbnail">P</span>
-                                                </li>
-                                                <?php } ?>
-                                                <?php if (in_array('system-roles-view', $perms)) {?>
-                                                <li>
-                                                    <a href="
-                                                        <?php echo $this->url('admin/system_roles'); ?>">Roles
-                                                    </a>
-                                                    <span class="icon-thumbnail">R</span>
-                                                </li>
-                                                <?php } ?>
-                                            </ul>
-                                        </li>
-                                        <?php } 
-                                            foreach ($partials as $key => $value) {
-                                               echo $this->partial($value); 
-                                            }
-                                        ?>
-                                        <li>
-                                            <a href="<?php echo $this->url('admin/logout'); ?>">
-                                              <span class="title">Salir</span>
-                                            </a>
-                                            <span class="icon-thumbnail"><i class="fa fa-power-off"></i></span>
-
-                                        </li>
-                                    </ul>
-                                    </div>
-                                               
-
-                                <?php } ?>
-                                </nav>
-
-                                <div class="page-container">
-                                  <div class="header ">
-                                    <!-- START MOBILE CONTROLS -->
-                                    <div class="container-fluid relative">
-                                      <!-- LEFT SIDE -->
-                                      <div class="pull-left full-height visible-sm visible-xs">
-                                        <!-- START ACTION BAR -->
-                                        <div class="header-inner">
-                                          <a href="#" class="btn-link toggle-sidebar visible-sm-inline-block visible-xs-inline-block padding-5" data-toggle="sidebar">
-                                            <span class="icon-set menu-hambuger"></span>
-                                          </a>
+                </nav>
+                <br>
+                    <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <?php if (!is_null($perms)) { ?>
+                                    <nav class="navbar" role="navigation">
+                                        <div>
+                                            <div>
+                                                <ul class="nav navbar-nav navbar-left-menu" style="margin-top:15px" id="admin-menu-sidebar">
+                                                    <?php if (in_array('system_users-view', $perms) || in_array('system_roles-view', $perms) || in_array('system_permissions-view', $perms)) { ?>
+                                                    <li>
+                                                        <a class="list-group-item" data-toggle="collapse" href="#nav-system-users">Usuarios del Sistema 
+                                                            <b class="caret"></b>
+                                                        </a>
+                                                        <ul class="collapse" id="nav-system-users">
+                                                            <?php if (in_array('system_users-view', $perms)) { ?>
+                                                            <li>
+                                                                <a class="list-group-item" href="
+                                                                    <?php echo $this->url('admin/system_users'); ?>">Usuarios del Sistema
+                                                                </a>
+                                                            </li>
+                                                            <?php } ?>
+                                                            <?php if (in_array('system_permissions-view', $perms)) { ?>
+                                                            <li>
+                                                                <a class="list-group-item" href="
+                                                                    <?php echo $this->url('admin/system_permissions'); ?>">Permisos
+                                                                </a>
+                                                            </li>
+                                                            <?php } ?>
+                                                            <?php if (in_array('system_roles-view', $perms)) {?>
+                                                            <li>
+                                                                <a class="list-group-item" href="
+                                                                    <?php echo $this->url('admin/system_roles'); ?>">Roles
+                                                                </a>
+                                                            </li>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </li>
+                                                    <?php } 
+                                                        foreach ($partials as $key => $value) {
+                                                           echo $this->partial($value); 
+                                                        }
+                                                    ?>
+                                                
+                                                    <li>
+                                                        <a class="list-group-item" href="
+                                                            <?php echo $this->url('admin/logout'); ?>">Cerrar Sesión
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <!-- END ACTION BAR -->
-                                      </div>
-                                      <div class="pull-center hidden-md hidden-lg">
-                                        <div class="header-inner">
-                                          <div class="brand inline">
-                                            <img src="/assets/img/logo_nodos-full.png" alt="logo" data-src="/assets/img/logo_nodos-full.png" data-src-retina="/assets/img/logo_nodos-full.png"  height="22">
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- END MOBILE CONTROLS -->
+                                    </nav>
 
-
-                                    <div class=" pull-left sm-table hidden-xs hidden-sm">
-                                      <div class="header-inner">
-                                        <div class="brand inline">
-                                          <img src="/assets/img/logo_nodos-full.png" alt="logo_nodos-full" data-src="/assets/img/logo_nodos-full.png" data-src-retina="/assets/img/logo_nodos-full.png" height="22">
-                                        </div>
-
-                                        <a href="/" class="search-link" target="_blank"><i class="pg-map"></i>Visitar el <span class="bold">sitio web</span></a> </div>
-                                    </div>
-                                    <div class=" pull-right">
-                                      <!-- START User Info-->
-                                      <div class="visible-lg visible-md m-t-10">
-                                        <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-
-                                          <!-- <span class="semi-bold"><?php echo $user['first_name']; ?></span> <span class="text-master"><?php echo $user['last_name']; ?></span>-->
-                                        </div>
-                                        <div class="dropdown pull-right">
-                                          <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="thumbnail-wrapper d32 circular inline m-t-5">
-                                            <i class="fa fa-user fa-2x"></i>
-                                        </span>
-                                          </button>
-                                          <ul class="dropdown-menu profile-dropdown" role="menu">
-                                            <li><a href="/admin/setting"><i class="pg-settings_small"></i>Configuración</a>
-                                            </li>
-                                            <?php /* <li><a href="#"><i class="fa fa-question-circle"></i> Ayuda</a>
-                                            </li> */ ?>
-                                            <li class="bg-master-lighter">
-                                              <a href="/admin/logout" class="clearfix">
-                                                <span class="pull-left">Cerrar Sesión</span>
-                                                <span class="pull-right"><i class="pg-power"></i></span>
-                                              </a>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                      <!-- END User Info-->
-                                    </div>
-                                  </div>
-                                  <!-- END HEADER -->
-
-                                  <!-- START PAGE CONTENT WRAPPER -->
-                                  <div class="page-content-wrapper ">
-                                    <!-- START PAGE CONTENT -->
-                                    <div class="content container-fluid">
+                                    <?php } ?>
+                                </div>
+                                <div class="col-sm-10">

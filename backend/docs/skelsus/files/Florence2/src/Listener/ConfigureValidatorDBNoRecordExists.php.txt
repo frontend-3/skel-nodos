@@ -1,0 +1,40 @@
+<?php
+/**
+ * This file is part of Florence2 Zend Framework 2 module.
+ */
+
+namespace Florence2\Listener;
+
+use Zend\Stdlib\ArrayUtils;
+
+/**
+ * Configure DBNoRecordExists Validator Listener
+ * 
+ * @package Florence2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+class ConfigureValidatorDBNoRecordExists
+{
+    /**
+     * Configure
+     * 
+     * @return void
+     * @since v1.0.0
+     */
+    static function configure($e)
+    {
+        $definition = $e->getTarget();
+        $specs      = $definition->getValidatorsSpecification();
+        
+        // Inject DB Adapter
+        $serviceManager = $definition->getServiceManager();
+        $dbAdapter      = $serviceManager->get('Zend\Db\Adapter\Adapter');
+        $specs['dbnorecordexists']['options']['adapter'] = $dbAdapter;
+        
+        $definition->setValidatorsSpecification($specs);
+    }
+}
+
+
+

@@ -13,19 +13,45 @@ namespace Ubigeo;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-class Module {
-
-    public function onBootstrap(MvcEvent $e) {
+class Module
+{
+    public function onBootstrap(MvcEvent $e)
+    {
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
-
-    public function getConfig() {
+    
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'ServiceDepartments' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new Ubigeo\Model\WebUbigeoDepartments($dbAdapter);
+                },
+                'ServiceProvinces' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new Ubigeo\Model\WebUbigeoProvinces($dbAdapter);
+                },
+                'ServiceDistricts' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new Ubigeo\Model\WebUbigeoDistricts($dbAdapter);
+                },
+            ),
+        );
+    }
+    
+    
+    public function getConfig()
+    {
         return include __DIR__ . '/config/module.config.php';
     }
-
-    public function getAutoloaderConfig() {
+    
+    
+    public function getAutoloaderConfig()
+    {
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
@@ -35,5 +61,5 @@ class Module {
             ),
         );
     }
-
 }
+

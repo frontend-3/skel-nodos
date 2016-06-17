@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Global Configuration Override
  *
@@ -11,32 +10,18 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
+
 return array(
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter'
-            => 'Zend\Db\Adapter\AdapterServiceFactory',
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
         ),
     ),
-    'site' => array(
-        'debug' => false,
-        'domain_url' => ''
-    ),
-    'session' => array(
-        'config' => array(
-            'class' => 'Zend\Session\Config\SessionConfig',
-            'options' => array(
-                'name' => 'DG_sess',
-                'cookie_httponly' => true,
-                'use_cookies' => true,
-                'cookie_secure' => true,
-            ),
-        ),
-        'storage' => 'Zend\Session\Storage\SessionArrayStorage',
-        'validators' =>
-            array(
-                'Zend\Session\Validator\RemoteAddr',
-                'Zend\Session\Validator\HttpUserAgent'
-            ),
+    
+    'session_config' => array(
+        'name'            => 'ndsk_session',
+        'cookie_httponly' => true,
+        'use_cookies'     => true,
+        'cookie_secure'   => false,
     ),
 );

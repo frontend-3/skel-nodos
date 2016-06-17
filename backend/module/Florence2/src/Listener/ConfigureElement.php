@@ -1,0 +1,84 @@
+<?php
+/**
+ * This file is part of Florence2 Zend Framework 2 module.
+ */
+
+namespace Florence2\Listener;
+
+use Zend\Stdlib\ArrayUtils;
+
+/**
+ * Common configure Element Listener
+ * 
+ * @package Florence2
+ * @version v1.0.0
+ * @author Jaime Wong <jaime.wong@nodosdigital.pe>
+ */
+class ConfigureElement
+{
+    /**
+     * Configure
+     * 
+     * @return void
+     * @since v1.0.0
+     */
+    static function configure($e)
+    {
+        $definition  = $e->getTarget();
+        
+        // OPTIONS
+        $defaultOptions = [
+            'label'            => $definition->get('label'),
+            'label_options'    => $definition->get('labelOptions'),
+            'label_attributes' => $definition->get('labelAttributes'),
+        ];
+        
+        // valueOptions
+        try {
+            $valueOptions = $definition->get('valueOptions');
+            $defaultOptions['value_options'] = $valueOptions;
+        }
+        catch (\OutOfRangeException $e) {
+        }
+        
+        $defaultOptions = ArrayUtils::merge($defaultOptions, $definition->get('elementOptions'));
+        
+        // ATTRIBUTES
+        $defaultAttributes = [
+            'required' => $definition->get('required'),
+        ];
+        
+        if (!is_null($definition->get('id'))) {
+            $defaultAttributes['id'] = $definition->get('id');
+        }
+        
+        if (!is_null($definition->get('class'))) {
+            $defaultAttributes['class'] = $definition->get('class');
+        }
+        
+        // Size attribute
+        try {
+            $size = $definition->get('size');
+            $defaultAttributes['size'] = $size;
+        }
+        catch (\OutOfRangeException $e) {
+        }
+        
+        $defaultAttributes = ArrayUtils::merge($defaultAttributes, $definition->get('elementAttributes'));
+        
+        // Build Element specification
+        $specification = [
+            'type'       => $definition->get('elementClassName'),
+            'name'       => $definition->name(),
+            'value'      => $definition->get('value'),
+            'options'    => $defaultOptions,
+            'attributes' => $defaultAttributes,
+        ];
+        
+        $currentSpec = $definition->getElementSpecification();
+        $newSpec     = ArrayUtils::merge($specification, $currentSpec);
+        
+        $definition->setElementSpecification($newSpec);
+    }
+}
+

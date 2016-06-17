@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<phpunit bootstrap="../../../test/bootstrap.php"
+         backupGlobals="false"
+         colors="true"
+         stopOnError="true"
+         stopOnFailure="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         syntaxCheck="true">
+    <testsuites>
+        <testsuite name="Ubigeo">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <var name="aspectMockExcludeDir" value="Ubigeo" />
+    </php>
+</phpunit>

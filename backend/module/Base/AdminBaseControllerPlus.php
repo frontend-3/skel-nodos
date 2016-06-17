@@ -21,6 +21,9 @@ class AdminBaseControllerPlus extends BaseController {
     protected $route = NULL;
     protected $perm  = NULL;
     protected $title = NULL;
+    public $has_ubigeo = false;
+    public $has_created_updated_by = false;
+    public $has_file_uploads = false;
     
     public function is_allowed($perm) {
         $user = $this->getLoggedUser();
@@ -431,7 +434,9 @@ class AdminBaseControllerPlus extends BaseController {
                 call_user_func($this->cb_is_valid);
                 
                 $this->prepareFormData();
-                $this->prepareUbigeoForSave();
+                if ($this->has_ubigeo) {
+                    $this->prepareUbigeoForSave();
+                }
                 $this->saveRecord();
                 $this->processFileUploads();
                 
@@ -515,14 +520,16 @@ class AdminBaseControllerPlus extends BaseController {
     
     public function prepareFormData() {
         foreach($this->form_data as $k => $v) {
-            if($v == '') {
-                $e = $this->flr->elements[$k];
-                
-                // Check if value should be considered or ignored
-                if(!isset($e['admin']) ||
-                   !isset($e['admin']['save_empty']) ||
-                   $e['admin']['save_empty'] == false) {
-                     unset($this->form_data[$k]);
+            if($k !== 'id') {
+                if($v == '') {
+                    $e = $this->flr->elements[$k];
+                    
+                    // Check if value should be considered or ignored
+                    if(!isset($e['admin']) ||
+                       !isset($e['admin']['save_empty']) ||
+                       $e['admin']['save_empty'] == false) {
+                         unset($this->form_data[$k]);
+                    }
                 }
             }
         }
@@ -565,10 +572,11 @@ class AdminBaseControllerPlus extends BaseController {
     
     
     public function processCreatedUpdatedBy() {
+        $user = $this->getLoggedUser();
+        $user_id = $user['id'];
+        
         if($this->id == 0) {
             if($this->has_created_updated_by) {
-                $user = $this->getLoggedUser();
-                $user_id = $user['id'];
                 $this->form_data['created_by'] = $user_id;
                 $this->form_data['updated_by'] = $user_id;
             }
@@ -778,7 +786,7 @@ class AdminBaseControllerPlus extends BaseController {
     
     public function deleteAction() {
         $this->coreSetup();
-    	$id = intval($this->params()->fromRoute('id'));
+        $id = intval($this->params()->fromRoute('id'));
         
         if($this->has_file_uploads && $this->use_files_module) {
             $table_name = $this->model($this->model_name)->getTableName();
@@ -791,7 +799,7 @@ class AdminBaseControllerPlus extends BaseController {
     }
     
     
-    public function render($tpl_name = '', $variables = array(), $options = array()){
+    public function render($tpl_name = '', $variables = array(), $options = array()) {
         $result = new ViewModel();
         if(array_key_exists('no_layout', $variables)) {
             $result->setTerminal(true);

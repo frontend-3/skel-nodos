@@ -1,0 +1,30 @@
+<?php
+/**
+ * This is a sample configuration for Base2\QuickMail.
+ * Add this to your local.php.
+ */
+
+return array(
+    'quickmail' => array(
+        // Transport to use: 'smtp', 'sendmail' or 'inmemory'
+        'transport' => 'smtp',
+        
+        'from_address' => 'jaime.wong@nodosdigital.pe',
+        'from_name'    => 'Jaime G. Wong',
+        
+        // If the transport is 'smtp', you'll need the following options too:
+        
+        // Host name of the mail server
+        'host'      => 'smtp.gmail.com',
+        // Username and password of the mail account
+        'username'  => 'jaime.wong@nodosdigital.pe',
+        'password'  => '*****',
+        // Connection class: 'smtp', 'plain', 'login' or 'crammd5'
+        'connection_class' => 'login',
+        // SSL can be 'tls' or 'ssl'.
+        'ssl'       => 'tls',
+        // Port number (usually 587 for TLS, 465 for SSL)
+        'port'      => 587,
+    ),
+);
+
