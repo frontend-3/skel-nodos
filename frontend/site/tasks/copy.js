@@ -1,8 +1,6 @@
 module.exports = function(gulp) {
-  var plugins,
-      argv;
+  var plugins;
 
-  argv = require('yargs').argv;
   plugins = {
     notify  : require('gulp-notify'),
     runSequence: require('run-sequence'),
