@@ -1,0 +1,13 @@
+extends ../../_layout
+
+prepend html
+  - custom.title = 'Home'
+  - custom.body_cls = 'body--home'
+
+block main
+  section.home
+    h2 Home
+    | !{config.getSVG(config.dev_static_url("svg/trash.svg"))}
+
+block scripts
+  +requireTag('site.home')
