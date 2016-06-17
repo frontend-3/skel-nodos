@@ -1,12 +1,10 @@
 module.exports = function(gulp) {
-  var plugins,
-      argv;
+  var plugins;
 
-  argv = require('yargs').argv;
   plugins = {
     glue  : require('gulp-sprite-glue'),
     runSequence: require('run-sequence'),
-    notify  : require('gulp-notify')  
+    notify  : require('gulp-notify')
   };
 
   gulp.task('glue', function() {
