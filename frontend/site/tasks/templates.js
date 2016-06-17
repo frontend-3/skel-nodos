@@ -21,7 +21,7 @@ module.exports = function(gulp) {
         }
       })
       .on("error",plugins.notify.onError(function (error) {
-        return "Error Jade " + error.message;
+        return "Error Pug " + error.message;
       })))
       .pipe(plugins.rename(function (path){
         var namespace = (path.dirname).charAt(0).toLowerCase() + (path.dirname).slice(1);
@@ -40,7 +40,7 @@ module.exports = function(gulp) {
         return "Error htmlmin: " + error.message;
       }))))
       .pipe(gulp.dest(gulp.config.deploy_routes().templates))
-      .pipe(plugins.notify(gulp.config.notifyConfig('Jade compiled')));
+      .pipe(plugins.notify(gulp.config.notifyConfig('Templates compiled')));
   }
 
   gulp.task('templates', function() {
