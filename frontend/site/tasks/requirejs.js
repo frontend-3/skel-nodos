@@ -6,7 +6,6 @@ module.exports = function(gulp) {
     requirejs : require('requirejs'),
     runSequence: require('run-sequence'),
   };
-
   gulp.task('requirejs', function() {
     plugins.requirejs.optimize({
       appDir:'static/scripts',
@@ -23,10 +22,6 @@ module.exports = function(gulp) {
         { name: 'site.thanks' }
       ]
     })
-  });
-
-  gulp.task('scripts', function () {
-    plugins.runSequence('coffee', 'copy:js', 'requirejs')
   });
 
 }
