@@ -23,7 +23,7 @@ npm install
 Tareas disponibles
 ==================
 
-Todas las tareas pueden ejecutarse en produccion agregando el argumento *--prod*
+Todas las tareas se ejecutan en producción
 
 **Construccion de archivos**
 ```shell
@@ -40,6 +40,10 @@ gulp styles
 **Compilacion de archivos jade**
 ```shell
 gulp templates
+```
+Para evitar el minificado se usa:
+```shell
+gulp templates --format
 ```
 
 **Generacion de sprites**
