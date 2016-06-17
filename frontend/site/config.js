@@ -41,9 +41,6 @@ var config = {
     }
     return this.settings.static_uri + '/' + url;
   },
-  dev_static_url: function(url) {
-    return 'static/' + url;
-  },
   reverse_url: function() {
     return "";
   },
@@ -67,9 +64,9 @@ var config = {
 
     return _config;
   },
-  getSVG: function(file) {
+  getSVG: function(name) {
     fs = require('fs');
-    return fs.readFileSync(file, 'utf8')
+    return fs.readFileSync('static/svg/' + name + '.svg', 'utf8')
   }
 };
 
