@@ -18,7 +18,9 @@ module.exports = function(gulp) {
       .on("error",plugins.notify.onError(function (error) {
         return "Error Stylus " + error.message;
       })))
-      .pipe(plugins.cssmin()
+      .pipe(plugins.cssmin({
+        keepSpecialComments: false,
+      })
       .on("error",plugins.notify.onError(function (error) {
         return "Error cssmin " + error.message;
       })))
