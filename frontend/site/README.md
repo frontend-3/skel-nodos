@@ -1,6 +1,6 @@
 skel
 ====
-Skeleton para desarrollo frontend configurado con GruntJS.
+Skeleton para desarrollo frontend configurado con GulpJS.
 
 Requisitos
 ==============
