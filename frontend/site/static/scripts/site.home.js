@@ -3,6 +3,7 @@ require([
   'tw',
   'jquery'
   ], function (fb, tw, $) {
+    var $document = $(document);
     var dom = {};
     var initialize;
     var catchDom;
@@ -16,7 +17,6 @@ require([
     }
 
     catchDom = function() {
-      dom.document = $(document);
     }
 
     afterCatchDom = function() {
@@ -43,5 +43,5 @@ require([
       subscribeEvents();
     }
 
-		dom.document.ready(initialize);
+		$document.ready(initialize);
 });
