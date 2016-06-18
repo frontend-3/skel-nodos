@@ -12,6 +12,9 @@ require([
     var fn;
     var st;
 
+    st = {
+    }
+
     catchDom = function() {
       dom.document = $(document);
     }
