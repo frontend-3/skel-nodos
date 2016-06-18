@@ -33,6 +33,7 @@ require([
       parseSocialElements: function() {
         fb.parseEls();
         tw.parseEls();
+
       }
     }
 
@@ -42,5 +43,5 @@ require([
       subscribeEvents();
     }
 
-		$doc.ready(initialize);
+		dom.document.ready(initialize);
 });
